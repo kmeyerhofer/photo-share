@@ -16,7 +16,7 @@ export default class Upload extends Component {
 
   uploadFiles = (files, url) => {
     let dirLocation = '';
-    Meteor.call('dirLocation', url, (error, result) => {
+    Meteor.call('dirLocation', (error, result) => {
       if (error) {
         // ADD ERROR RESOLUTION
       } else {
@@ -37,9 +37,15 @@ export default class Upload extends Component {
             streams: 'dynamic',
             allowWebWorkers: false,
           }, false);
-          uploader.on('uploaded', function(error, fileObj) {
+          uploader.on('end', function(error, fileObj) {
             if (error) {
               // ADD ERROR RESOLUTION
+            } else {
+              Meteor.call('moveFile', fileObj, (error, result) => {
+                if (error) {
+                  // ADD ERROR RESOLUTION
+                }
+              });
             }
           });
           uploader.start();
