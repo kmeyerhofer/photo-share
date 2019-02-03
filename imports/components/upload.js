@@ -14,6 +14,14 @@ export default class Upload extends Component {
     return fileSHA256.digest().toHex().toString();
   }
 
+  moveFiles = (fileObj) => {
+    Meteor.call('moveFile', fileObj, (error, result) => {
+      if (error) {
+        // ADD ERROR RESOLUTION
+      }
+    });
+  }
+
   uploadFiles = (files, url) => {
     let dirLocation = '';
     Meteor.call('dirLocation', (error, result) => {
@@ -41,11 +49,7 @@ export default class Upload extends Component {
             if (error) {
               // ADD ERROR RESOLUTION
             } else {
-              Meteor.call('moveFile', fileObj, (error, result) => {
-                if (error) {
-                  // ADD ERROR RESOLUTION
-                }
-              });
+              this.moveFiles(fileObj);
             }
           });
           uploader.start();
