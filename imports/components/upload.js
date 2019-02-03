@@ -30,7 +30,7 @@ export default class Upload extends Component {
             file: files[i],
             meta: {
               url,
-              fileLocation: `${dirLocation}/${fileName}`,
+              fileLocation: `${dirLocation}/${url}/${fileName}`,
               fileName,
             },
             chunkSize: 'dynamic',
