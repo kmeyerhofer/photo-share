@@ -1,18 +1,24 @@
 import { Meteor } from 'meteor/meteor';
-import fs from 'fs';
+import fse from 'fs-extra';
 import Files from '../imports/api/filesCollection.js'; // Needed for server side FilesColletion use
+// const fse = require('fs-extra');
 
 Meteor.startup(() => {
   // code to run on server at startup
 });
 
 Meteor.methods({
-  dirLocation(url) {
-    const tmp = `${process.env.PWD}/tmp`;
-    const newDir = `${tmp}/${url}`;
-    fs.mkdirSync(newDir, (err) => {
-      if (err) throw err;
+  dirLocation() {
+    return `${process.env.PWD}/tmp`;
+  },
+  moveFile(fileObj) {
+    const fileSaveRoot = `${fileObj._downloadRoute}`;
+    const fileSource = `${fileObj.path}`;
+    const fileDestination = `${fileSaveRoot}/${fileObj.meta.url}/${fileObj.meta.fileName}`;
+    fse.move(fileSource, fileDestination, (err) => {
+      if (err) {
+        // ADD ERROR RESOLUTION
+      }
     });
-    return newDir;
-  }
+  },
 });
