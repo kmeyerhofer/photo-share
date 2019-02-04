@@ -23,6 +23,7 @@ export default class Upload extends Component {
   }
 
   uploadFiles = (files, url) => {
+    let self = this;
     let dirLocation = '';
     Meteor.call('dirLocation', (error, result) => {
       if (error) {
@@ -30,7 +31,7 @@ export default class Upload extends Component {
       } else {
         dirLocation = result;
         for (let i = 0; i < files.length; i += 1) {
-          const fileName = this.generateFileHash(files[i]);
+          const fileName = self.generateFileHash(files[i]);
           Files.namingFunction = function() {
             return fileName;
           };
@@ -49,7 +50,7 @@ export default class Upload extends Component {
             if (error) {
               // ADD ERROR RESOLUTION
             } else {
-              this.moveFiles(fileObj);
+              self.moveFiles(fileObj);
             }
           });
           uploader.start();
