@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Upload from './upload.js'
 import { withTracker } from 'meteor/react-meteor-data';
+import Upload from './upload.js'
 
 export default class App extends React.Component {
   render() {

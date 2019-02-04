@@ -22,3 +22,4 @@ static-html
 react-meteor-data
 ostrio:files
 aldeed:collection2@3.0.0
+kadira:flow-router
