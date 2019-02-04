@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import fse from 'fs-extra';
-import Files from '../imports/api/filesCollection.js'; // Needed for server side FilesColletion use
+import '../imports/api/filesCollection.js'; // Needed for server side FilesColletion use
 // const fse = require('fs-extra');
 
 Meteor.startup(() => {
@@ -22,3 +22,9 @@ Meteor.methods({
     });
   },
 });
+
+Meteor.publish('files.public', function(folderURL) {
+  // new SimpleSchema({
+  //
+  // })
+})
