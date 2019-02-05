@@ -1,32 +1,69 @@
 import React, { Component } from 'react';
-import shortid from 'shortid';
+import { Meteor } from 'meteor/meteor';
 import forge from 'node-forge';
-import { Files } from '../api/files.js';
+import shortid from 'shortid';
+import Files from '../api/filesCollection.js';
 
-export default class Upload extends React.Component {
+
+export default class Upload extends Component {
   generateUrl = () => shortid.generate();
 
-  generateFileLocation = (file) => {
-    let messageDigest = forge.md.sha256.create();
-    let fileSHA256 = messageDigest.update(file.name);
-    return 'tmp/' + fileSHA256.digest().toHex().toString();
+  generateFileHash = (file) => {
+    const messageDigest = forge.md.sha256.create();
+    const fileSHA256 = messageDigest.update(file.name);
+    return fileSHA256.digest().toHex().toString();
   }
 
-  saveFilesToDB = (files, url) => {
-    for (let i = 0; i < files.length; i += 1) {
-      Files.insert({
-        url,
-        fileLocation: this.generateFileLocation(files[i])
-      });
-    }
+  moveFiles = (fileObj) => {
+    Meteor.call('moveFile', fileObj, (error, result) => {
+      if (error) {
+        // ADD ERROR RESOLUTION
+      }
+    });
+  }
+
+  uploadFiles = (files, url) => {
+    let dirLocation = '';
+    Meteor.call('dirLocation', (error, result) => {
+      if (error) {
+        // ADD ERROR RESOLUTION
+      } else {
+        dirLocation = result;
+        for (let i = 0; i < files.length; i += 1) {
+          const fileName = this.generateFileHash(files[i]);
+          Files.namingFunction = function() {
+            return fileName;
+          };
+          const uploader = Files.insert({
+            file: files[i],
+            meta: {
+              url,
+              fileLocation: `${dirLocation}/${url}/${fileName}`,
+              fileName,
+            },
+            chunkSize: 'dynamic',
+            streams: 'dynamic',
+            allowWebWorkers: false,
+          }, false);
+          uploader.on('end', function(error, fileObj) {
+            if (error) {
+              // ADD ERROR RESOLUTION
+            } else {
+              this.moveFiles(fileObj);
+            }
+          });
+          uploader.start();
+        }
+      }
+    });
   }
 
   fileSubmitHandler = (event) => {
     event.preventDefault();
-    let url = this.generateUrl();
-    let fileList = document.querySelector('#files').files;
+    const url = this.generateUrl();
+    const fileList = document.querySelector('#files').files;
     // Add fileList encryption step here
-    this.saveFilesToDB(fileList, url);
+    this.uploadFiles(fileList, url);
   }
 
   render() {
