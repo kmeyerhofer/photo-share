@@ -5,7 +5,6 @@ import shortid from 'shortid';
 import Files from '../api/filesCollection.js';
 import { Redirect } from 'react-router-dom';
 
-
 export default class Upload extends Component {
   state = {
     uploaded: false,
@@ -72,7 +71,6 @@ export default class Upload extends Component {
     const fileList = document.querySelector('#files').files;
     // Add fileList encryption step here
     this.uploadFiles(fileList);
-
   }
 
   render() {
