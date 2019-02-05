@@ -14,8 +14,4 @@ An encrypted photo sharing service.
 
   * `git clone  https://github.com/kmeyerhofer/photo-share.git ~/photo-share`
 
-* Install ES Lint from [these instructiions](https://guide.meteor.com/code-style.html#eslint-installing)
-
-  - `meteor npm install --save-dev babel-eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-meteor eslint-plugin-react eslint-plugin-jsx-a11y eslint-import-resolver-meteor eslint @meteorjs/eslint-config-meteor`
-
-  # 
+* Run the server with the command `meteor` within the `photo-share` directory.
