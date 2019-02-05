@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import Upload from './upload.js'
 import { withTracker } from 'meteor/react-meteor-data';
 
+
 export default class App extends React.Component {
+
+
   render() {
     return (
       <div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import shortid from 'shortid';
 import forge from 'node-forge';
 import { Files } from '../api/files.js';
+import { encrypt } from '../helpers/encrypt.js'
 
 export default class Upload extends React.Component {
   generateUrl = () => shortid.generate();
@@ -24,8 +25,9 @@ export default class Upload extends React.Component {
   fileSubmitHandler = (event) => {
     event.preventDefault();
     let url = this.generateUrl();
-    let fileList = document.querySelector('#files').files;
+    let fileList = document.querySelector('#files').files; // list of obj
     // Add fileList encryption step here
+    encrypt(fileList);
     this.saveFilesToDB(fileList, url);
   }
 
