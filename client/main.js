@@ -1,10 +1,9 @@
 import { Meteor } from 'meteor/meteor';
-// import React, { Component } from 'react';
-// import ReactDOM from 'react-dom';
-// import App from '../imports/components/app.js';
-import './routes.js';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from '../imports/components/app.js';
 
 
 Meteor.startup(() => {
-  // ReactDOM.render(<App />, document.getElementById('app')); // everything begins with this method, client and server side.
+  ReactDOM.render(<App />, document.getElementById('app'));
 });
