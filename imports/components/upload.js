@@ -3,9 +3,14 @@ import { Meteor } from 'meteor/meteor';
 import forge from 'node-forge';
 import shortid from 'shortid';
 import Files from '../api/filesCollection.js';
-
+import { Redirect } from 'react-router-dom';
 
 export default class Upload extends Component {
+  state = {
+    uploaded: false,
+    url: '',
+  };
+
   generateUrl = () => shortid.generate();
 
   generateFileHash = (file) => {
@@ -22,7 +27,8 @@ export default class Upload extends Component {
     });
   }
 
-  uploadFiles = (files, url) => {
+  uploadFiles = (files) => {
+    let self = this;
     let dirLocation = '';
     Meteor.call('dirLocation', (error, result) => {
       if (error) {
@@ -30,15 +36,15 @@ export default class Upload extends Component {
       } else {
         dirLocation = result;
         for (let i = 0; i < files.length; i += 1) {
-          const fileName = this.generateFileHash(files[i]);
+          const fileName = self.generateFileHash(files[i]);
           Files.namingFunction = function() {
             return fileName;
           };
           const uploader = Files.insert({
             file: files[i],
             meta: {
-              url,
-              fileLocation: `${dirLocation}/${url}/${fileName}`,
+              url: `${self.state.url}`,
+              fileLocation: `${dirLocation}/${self.state.url}/${fileName}`,
               fileName,
             },
             chunkSize: 'dynamic',
@@ -49,7 +55,8 @@ export default class Upload extends Component {
             if (error) {
               // ADD ERROR RESOLUTION
             } else {
-              this.moveFiles(fileObj);
+              self.moveFiles(fileObj);
+              self.setState({ uploaded: true });
             }
           });
           uploader.start();
@@ -60,17 +67,18 @@ export default class Upload extends Component {
 
   fileSubmitHandler = (event) => {
     event.preventDefault();
-    const url = this.generateUrl();
+    this.setState({ url: this.generateUrl()});
     const fileList = document.querySelector('#files').files;
     // Add fileList encryption step here
-    this.uploadFiles(fileList, url);
+    this.uploadFiles(fileList);
   }
 
   render() {
+    if (this.state.uploaded) return <Redirect to={this.state.url} />;
     return (
       <form onSubmit={this.fileSubmitHandler}>
         <input type="file" id="files" multiple />
-        <button type="submit">Submit</button>
+        <button type="submit">Upload</button>
       </form>
     );
   }

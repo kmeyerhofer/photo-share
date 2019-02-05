@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import Upload from './upload.js'
-import { withTracker } from 'meteor/react-meteor-data';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-export default class App extends React.Component {
+// React Components
+import Upload from './upload.js';
+import Folder from './folder.js';
+
+export default class App extends Component {
   render() {
     return (
-      <div>
-        <h1>hello this works</h1>
-        <Upload />
-      </div>
+      <BrowserRouter>
+        <div>
+          <h1>hello this works</h1>
+          <Route exact path='/' component={Upload} />
+          <Route path='/:folderID' component={Folder} />
+        </div>
+      </BrowserRouter>
     );
   }
 }

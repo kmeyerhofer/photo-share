@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import fse from 'fs-extra';
-import Files from '../imports/api/filesCollection.js'; // Needed for server side FilesColletion use
-// const fse = require('fs-extra');
+import MongoFiles from '../imports/api/mongoFiles.js';
+import '../imports/api/filesCollection.js'; // Needed for server side FilesColletion use
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -22,3 +22,9 @@ Meteor.methods({
     });
   },
 });
+
+Meteor.publish('files', function(folderURL) {
+  return MongoFiles.find({
+    "meta.url": `${folderURL}`,
+  });
+})
