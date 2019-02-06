@@ -1,26 +1,25 @@
 import forge from 'node-forge';
 
+export function promise(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.onerror = () => {
+      reject('Error reading file');
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
-export function encrypt(fileList) {  // list of file objects
-  if (fileList === undefined || fileList === null){
+export function encrypt(file) {  // list of file objects
+  if (file === undefined || file === null){
     return;
   }
   var key = forge.random.getBytesSync(16);
   var iv = forge.random.getBytesSync(16);
-  var base64File;
-  var encryptedFileList = [];
-  for (var i = 0; i < fileList.length; i++){
-    var encryptBase64File = fileToBase64(fileList[i], function(e) {
-      base64File = e.target.result;
-
-      var encrypted = encryption(key, iv, base64File);
-      // console.log(encrypted);
-      encryptedFileList.push(encrypted);
-      console.log(typeof encrypted.data); // encrypted.data is represented as a string
-    });
-  }
-  // console.log(encryptedFileList);
-  return encryptedFileList;
+  return encryption(key, iv, file);
 }
 
 function fileToBase64(fileObj, onLoadCallBack) {
@@ -37,7 +36,7 @@ function encryption(key, iv, file) {
   cipher.start({iv:iv});
   cipher.update(forge.util.createBuffer(file));
   cipher.finish();
-  return cipher.output
+  return cipher.output.data;
 }
 
 //test cases

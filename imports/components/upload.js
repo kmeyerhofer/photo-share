@@ -4,7 +4,7 @@ import forge from 'node-forge';
 import shortid from 'shortid';
 import Files from '../api/filesCollection.js';
 import { Redirect } from 'react-router-dom';
-import { encrypt } from '../helpers/encrypt.js'
+import { encrypt, promise } from '../helpers/encrypt.js'
 
 export default class Upload extends Component {
   state = {
@@ -12,13 +12,11 @@ export default class Upload extends Component {
     url: '',
   };
 
-
   generateUrl = () => shortid.generate();
 
   generateFileHash = (file) => {
     const messageDigest = forge.md.sha256.create();
-    console.log(file);
-    const fileSHA256 = messageDigest.update(file.data);
+    const fileSHA256 = messageDigest.update(file);
     return fileSHA256.digest().toHex().toString();
   }
 
@@ -44,7 +42,7 @@ export default class Upload extends Component {
             return fileName;
           };
           const uploader = Files.insert({  // config settings for uploader
-            file: files[i].data,
+            file: files[i],
             fileName: fileName,
             meta: {
               url: `${self.state.url}`,
@@ -55,19 +53,45 @@ export default class Upload extends Component {
             streams: 'dynamic',
             isBase64: true,
             type: 'image/png',
-            allowWebWorkers: false,
           }, false);
           uploader.on('end', function(error, fileObj) {
             if (error) {
               // ADD ERROR RESOLUTION
             } else {
               self.moveFiles(fileObj);
-              self.setState({ uploaded: true });
+              // self.setState({ uploaded: true });
             }
           });
-          uploader.start();
+          uploader.on('error', function(error, fileData) {
+            if (error) {
+            }
+          });
+          uploader.on('start', function(error, fileData) {
+            if (error) {
+            }
+          });
+          const encryptFunc = function(data) {
+            return encrypt(data);
+          };
+          console.log(files[i]);
+          uploader.pipe(encryptFunc).start();
         }
+        self.setState({ uploaded: true });
       }
+    });
+  }
+
+  promiseFileLoader = async (fileList) => {
+    let self = this;
+    let fileListArr = [];
+    for (let i = 0; i < fileList.length; i += 1) {
+      fileListArr.push(promise(fileList[i]));
+    }
+    console.log('promise array');
+    console.log(fileListArr);
+    console.log(fileListArr.length);
+    Promise.all(fileListArr).then(values => {
+      self.uploadFiles(values);
     });
   }
 
@@ -75,9 +99,7 @@ export default class Upload extends Component {
     event.preventDefault();
     this.setState({ url: this.generateUrl()});
     const fileList = document.querySelector('#files').files;
-    // Add fileList encryption step here
-    var encryptedFileList = encrypt(fileList);
-    this.uploadFiles(encryptedFileList);
+    const fileListArr = this.promiseFileLoader(fileList);
   }
 
   render() {
