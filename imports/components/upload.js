@@ -17,7 +17,8 @@ export default class Upload extends Component {
 
   generateFileHash = (file) => {
     const messageDigest = forge.md.sha256.create();
-    const fileSHA256 = messageDigest.update(file.name);
+    console.log(file);
+    const fileSHA256 = messageDigest.update(file.data);
     return fileSHA256.digest().toHex().toString();
   }
 
@@ -42,8 +43,9 @@ export default class Upload extends Component {
           Files.namingFunction = function() {
             return fileName;
           };
-          const uploader = Files.insert({
-            file: files[i],
+          const uploader = Files.insert({  // config settings for uploader
+            file: files[i].data,
+            fileName: fileName,
             meta: {
               url: `${self.state.url}`,
               fileLocation: `${dirLocation}/${self.state.url}/${fileName}`,
@@ -51,6 +53,8 @@ export default class Upload extends Component {
             },
             chunkSize: 'dynamic',
             streams: 'dynamic',
+            isBase64: true,
+            type: 'image/png',
             allowWebWorkers: false,
           }, false);
           uploader.on('end', function(error, fileObj) {
@@ -69,18 +73,11 @@ export default class Upload extends Component {
 
   fileSubmitHandler = (event) => {
     event.preventDefault();
-<<<<<<< HEAD
-    let url = this.generateUrl();
-    let fileList = document.querySelector('#files').files; // list of obj
-    // Add fileList encryption step here
-    encrypt(fileList);
-    this.saveFilesToDB(fileList, url);
-=======
     this.setState({ url: this.generateUrl()});
     const fileList = document.querySelector('#files').files;
     // Add fileList encryption step here
-    this.uploadFiles(fileList);
->>>>>>> master
+    var encryptedFileList = encrypt(fileList);
+    this.uploadFiles(encryptedFileList);
   }
 
   render() {
