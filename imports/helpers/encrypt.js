@@ -9,7 +9,7 @@ function decrypt(file, encryptedFile, key, iv) {
   // console.log('decipher.output: ', decipher.output);
   // console.log('file === encryptedFile: ', (file === encryptedFile));
   // console.log('encryptedFile === decipher.output: ', (encryptedFile === decipher.output.data));
-  console.log('file === decipher.output.data: ', (file === decipher.output.data));
+  // console.log('file === decipher.output.data: ', (file === decipher.output.data));
   // console.log(file);
   // console.log(encryptedFile.data);
 }
@@ -23,8 +23,8 @@ export function promise(file) {
     reader.onerror = () => {
       reject('Error reading file');
     };
-    reader.readAsDataURL(file);
-    // reader.readAsArrayBuffer(file);
+    // reader.readAsDataURL(file);
+    reader.readAsArrayBuffer(file);
   });
 }
 
@@ -64,9 +64,9 @@ function fileToBase64(fileObj, onLoadCallBack) {
 function encryption(key, iv, file) {
   var cipher = forge.cipher.createCipher('AES-CBC', key);
   cipher.start({iv:iv});
-  cipher.update(forge.util.createBuffer(file));
+  cipher.update(forge.util.createBuffer(file, 'raw'));
   cipher.finish();
-  console.log(cipher);
+  // console.log(cipher);
   return cipher.output;
 }
 
