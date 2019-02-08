@@ -11,6 +11,8 @@ export default class Upload extends Component {
   state = {
     uploaded: false,
     url: '',
+    password: "",
+    iv: forge.random.getBytesSync(16),
   };
 
   generateUrl = () => shortid.generate();
@@ -19,6 +21,26 @@ export default class Upload extends Component {
     const messageDigest = forge.md.sha256.create();
     const fileSHA256 = messageDigest.update(file);
     return fileSHA256.digest().toHex().toString();
+  }
+
+  handlePasswordValidate = () => {
+    let formIsValid = true;
+    let err = '';
+    if (this.state.password === "") {
+      formIsValid = false;
+      alert("password cannot be blank");
+    }
+    if (this.state.password.length < 5 ) {
+      formIsValid = false;
+      alert("password needs to be longer than 5 characters");
+    }
+    this.setState({error: err})
+    return formIsValid;
+  }
+
+  handlePassChange = (event) => {
+    let pass = event.target.value;
+    this.setState({password: pass});
   }
 
   uploadEncryptedFiles = (fileInfo, files) => {
@@ -37,7 +59,7 @@ export default class Upload extends Component {
         fileName: fileData.fileName,
       });
 
-      let encryptedFile = encrypt(files[i]);
+      let encryptedFile = encrypt(files[i], this.state.password, this.state.iv);
       Meteor.call('fileUpload', fileData, encryptedFile, (error, result) => {
         if (error) {
           // ADD ERROR RESOLUTION
@@ -64,9 +86,11 @@ export default class Upload extends Component {
 
   fileSubmitHandler = (event) => {
     event.preventDefault();
-    this.setState({ url: this.generateUrl()});
-    const fileList = document.querySelector('#files').files;
-    this.promiseFileLoader(fileList);
+    if(this.handlePasswordValidate()){
+      this.setState({ url: this.generateUrl()});
+      const fileList = document.querySelector('#files').files;
+      this.promiseFileLoader(fileList);
+    }
   }
 
   render() {
@@ -74,6 +98,11 @@ export default class Upload extends Component {
     return (
       <form onSubmit={this.fileSubmitHandler}>
         <input type="file" id="files" multiple />
+        Password: <input type="password" id="pass" placeholder='password'
+       onChange = {this.handlePassChange}
+       value = {this.state.password}
+       />
+       <br/>
         <button type="submit">Upload</button>
       </form>
     );
