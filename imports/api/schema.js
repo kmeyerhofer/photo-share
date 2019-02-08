@@ -1,17 +1,18 @@
 import SimpleSchema from 'simpl-schema';
 
 const schema = new SimpleSchema({
-  meta: {
-    type: Object,
-  },
-  'meta.url': {
+  'url': {
     type: String,
   },
-  'meta.fileLocation': {
+  'fileLocation': {
     type: String,
   },
-  'meta.fileName': {
+  'fileName': {
     type: String,
+  },
+  'iv': {
+    type: String,
+    optional: true, // remove optional in future
   },
 });
 
