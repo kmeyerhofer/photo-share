@@ -49,36 +49,46 @@ export default class Upload extends Component {
               fileLocation: `${dirLocation}/${self.state.url}/${fileName}`,
               fileName,
             },
-            chunkSize: 'dynamic',
+            // chunkSize: 'dynamic',
+            // chunkSize: 1024 * 1024,
+            type: 'img',
             streams: 'dynamic',
             isBase64: true,
-            type: 'image/png',
+            allowWebWorkers: false,
           }, false);
+          uploader.on('data', function(data) {
+            console.log('data call');
+            console.log(data.length);
+          });
+          uploader.on('progress', function(progress, fileData) {
+            console.log('progress fileData', progress, fileData);
+          });
+          uploader.on('error', function(error, fileData) {
+            console.log('error fileData', fileData);
+          });
           uploader.on('end', function(error, fileObj) {
             if (error) {
               // ADD ERROR RESOLUTION
             } else {
               self.moveFiles(fileObj);
-              // self.setState({ uploaded: true });
-            }
-          });
-          uploader.on('error', function(error, fileData) {
-            if (error) {
-            }
-          });
-          uploader.on('start', function(error, fileData) {
-            if (error) {
+              if (i === files.length - 1) { // Last file in the array
+                self.setState({ uploaded: true });
+              }
             }
           });
           const encryptFunc = function(data) {
-            return encrypt(data);
+            console.log('piped data ');
+            console.log({data});
+            var returned = encrypt(data);
+            console.log('after encrypt is called ');
+            console.log({returned});
+            return returned;
           };
-          console.log(files[i]);
           uploader.pipe(encryptFunc).start();
         }
-        self.setState({ uploaded: true });
       }
     });
+
   }
 
   promiseFileLoader = async (fileList) => {
@@ -87,9 +97,9 @@ export default class Upload extends Component {
     for (let i = 0; i < fileList.length; i += 1) {
       fileListArr.push(promise(fileList[i]));
     }
-    console.log('promise array');
-    console.log(fileListArr);
-    console.log(fileListArr.length);
+    // console.log('promise array');
+    // console.log(fileListArr);
+    // console.log(fileListArr.length);
     Promise.all(fileListArr).then(values => {
       self.uploadFiles(values);
     });

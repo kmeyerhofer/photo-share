@@ -7,6 +7,7 @@ const Files = new FilesCollection({
   downloadRoute: `${process.env.PWD}/tmp`,
   collection: MongoFiles,
   collectionName: 'files',
+  // debug: true,
 });
 
 Files.collection.attachSchema(schema);
