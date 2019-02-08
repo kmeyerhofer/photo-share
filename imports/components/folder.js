@@ -19,9 +19,9 @@ class Folder extends Component {
         return (
           <EachFile
             id={file._id}
-            name={file.meta.fileName}
-            location={file.meta.fileLocation}
-            url={file.meta.url}
+            name={file.fileName}
+            location={file.fileLocation}
+            url={file.url}
           />
         );
       });
