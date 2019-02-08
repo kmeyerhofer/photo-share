@@ -10,8 +10,25 @@ export default class Upload extends Component {
   state = {
     uploaded: false,
     url: '',
+    password: "",
+    error: '',
   };
 
+  handlePasswordValidate = () => {
+    let formIsValid = true;
+    let err = '';
+    console.log(this.state.password);
+    if (this.state.password === "") {
+      formIsValid = false;
+      alert("password cannot be blank");
+    }
+    if (this.state.password.length < 5 ) {
+      formIsValid = false;
+      alert("password needs to be longer than 5 characters");
+    }
+    this.setState({error: err})
+    return formIsValid;
+  }
 
   generateUrl = () => shortid.generate();
 
@@ -43,7 +60,7 @@ export default class Upload extends Component {
           Files.namingFunction = function() {
             return fileName;
           };
-          const uploader = Files.insert({  // config settings for uploader
+          const uploader = Files.insert({  // config settings for uploader  , meteor-files schenanigans
             file: files[i].data,
             fileName: fileName,
             meta: {
@@ -71,13 +88,26 @@ export default class Upload extends Component {
     });
   }
 
+  handlePassChange = (event) => {
+    let pass = event.target.value;
+    this.setState({password: pass});
+  }
+
   fileSubmitHandler = (event) => {
     event.preventDefault();
-    this.setState({ url: this.generateUrl()});
-    const fileList = document.querySelector('#files').files;
-    // Add fileList encryption step here
-    var encryptedFileList = encrypt(fileList);
-    this.uploadFiles(encryptedFileList);
+    if (this.handlePasswordValidate()){
+      this.setState({ url: this.generateUrl()});
+      const fileList = document.querySelector('#files').files;
+      // Add fileList encryption step here
+      var encryptedFileList = encrypt(fileList, this.state.password);
+      console.log(encryptedFileList);
+      this.uploadFiles(encryptedFileList);
+    }
+    // this.setState({ url: this.generateUrl()});
+    // const fileList = document.querySelector('#files').files;
+    // // Add fileList encryption step here
+    // var encryptedFileList = encrypt(fileList);
+    // this.uploadFiles(encryptedFileList);
   }
 
   render() {
@@ -85,6 +115,11 @@ export default class Upload extends Component {
     return (
       <form onSubmit={this.fileSubmitHandler}>
         <input type="file" id="files" multiple />
+        Password: <input type="password" id="pass" placeholder='password'
+        onChange = {this.handlePassChange}
+        value = {this.state.password}
+        />
+        <br />
         <button type="submit">Upload</button>
       </form>
     );

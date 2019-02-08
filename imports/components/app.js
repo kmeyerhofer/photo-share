@@ -10,7 +10,6 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <h1>hello this works</h1>
           <Route exact path='/' component={Upload} />
           <Route path='/:folderID' component={Folder} />
         </div>

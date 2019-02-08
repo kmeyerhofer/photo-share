@@ -1,12 +1,18 @@
 import forge from 'node-forge';
 
 
-export function encrypt(fileList) {  // list of file objects
+export function encrypt(fileList, password) {  // list of file objects
   if (fileList === undefined || fileList === null){
     return;
   }
-  var key = forge.random.getBytesSync(16);
-  var iv = forge.random.getBytesSync(16);
+  if (password === undefined || password === null){
+    return;
+  }
+  // var key = forge.random.getBytesSync(16);
+  var salt = forge.random.getBytesSync(16);
+  var key = forge.pkcs5.pbkdf2(password, salt, 8, 16);
+  var iv = forge.random.getBytesSync(16); // might need to store iv for decryption -> TODO figure this out
+
   var base64File;
   var encryptedFileList = [];
   for (var i = 0; i < fileList.length; i++){
@@ -23,19 +29,19 @@ export function encrypt(fileList) {  // list of file objects
   return encryptedFileList;
 }
 
-function fileToBase64(fileObj, onLoadCallBack) {
-  var reader = new FileReader();
-  reader.readAsDataURL(fileObj);
-  reader.onload = onLoadCallBack;
-  reader.onerror = function(error) {
-    console.log('Error', error);
-  }
-}
+// function fileToBase64(fileObj, onLoadCallBack) {
+//   var reader = new FileReader();
+//   reader.readAsDataURL(fileObj);
+//   reader.onload = onLoadCallBack;
+//   reader.onerror = function(error) {
+//     console.log('Error', error);
+//   }
+// }
 
 function encryption(key, iv, file) {
   var cipher = forge.cipher.createCipher('AES-CBC', key);
   cipher.start({iv:iv});
-  cipher.update(forge.util.createBuffer(file));
+  cipher.update(forge.util.createBuffer(file)); // createBuffer(file, String raw)
   cipher.finish();
   return cipher.output
 }
