@@ -18,6 +18,7 @@ class Folder extends Component {
       return files.map((file) => {
         return (
           <EachFile
+            key={file._id}
             id={file._id}
             name={file.fileName}
             location={file.fileLocation}
