@@ -6,13 +6,15 @@ import { Redirect } from 'react-router-dom';
 import encrypt from '../helpers/encrypt.js';
 import promise from '../helpers/promise.js';
 import MongoFiles from '../api/mongoFiles.js';
+import Error from './error.js';
 
 export default class Upload extends Component {
   state = {
     uploaded: false,
     url: '',
-    password: "",
+    password: '',
     iv: forge.random.getBytesSync(16),
+    errorMessage: false,
   };
 
   generateUrl = () => shortid.generate();
@@ -28,13 +30,13 @@ export default class Upload extends Component {
     let err = '';
     if (this.state.password === "") {
       formIsValid = false;
-      alert("password cannot be blank");
+      err = 'Password cannot be blank.';
+      this.errorMessageStateTimer(err, 5000)
+    } else if (this.state.password.length < 5 ) {
+        formIsValid = false;
+        err = 'Password needs to be longer than 5 characters.';
+        this.errorMessageStateTimer(err, 5000);
     }
-    if (this.state.password.length < 5 ) {
-      formIsValid = false;
-      alert("password needs to be longer than 5 characters");
-    }
-    this.setState({error: err})
     return formIsValid;
   }
 
@@ -52,19 +54,16 @@ export default class Upload extends Component {
         fileLocation: `${self.state.url}/${fileName}`,
         fileName,
       };
-      // console.log(fileData);
-      MongoFiles.insert({
-        url: fileData.url,
-        fileLocation: fileData.fileLocation,
-        fileName: fileData.fileName,
-      });
-
       let encryptedFile = encrypt(files[i], this.state.password, this.state.iv);
       Meteor.call('fileUpload', fileData, encryptedFile, (error, result) => {
         if (error) {
-          // ADD ERROR RESOLUTION
+          this.errorMessageStateTimer(error.message, 5000);
         } else {
-          // console.log('file uploaded');
+          MongoFiles.insert({
+            url: fileData.url,
+            fileLocation: fileData.fileLocation,
+            fileName: fileData.fileName,
+          });
           if (i === files.length - 1) { // Last file in the array
             self.setState({ uploaded: true });
           }
@@ -84,27 +83,41 @@ export default class Upload extends Component {
     });
   }
 
+  errorMessageStateTimer = (message, ms) => {
+    this.setState({ errorMessage: message })
+    let timer = setTimeout(() => {
+      this.setState(() => ({ errorMessage: false }))
+      clearTimeout(timer);
+    }, ms);
+  }
+
   fileSubmitHandler = (event) => {
     event.preventDefault();
     if(this.handlePasswordValidate()){
       this.setState({ url: this.generateUrl()});
       const fileList = document.querySelector('#files').files;
-      this.promiseFileLoader(fileList);
+      if (fileList.length < 1) {
+        this.errorMessageStateTimer('You must select a file.', 5000)
+      } else {
+        this.promiseFileLoader(fileList);
+      }
     }
   }
 
   render() {
     if (this.state.uploaded) return <Redirect to={this.state.url} />;
     return (
-      <form onSubmit={this.fileSubmitHandler}>
-        <input type="file" id="files" multiple />
-        Password: <input type="password" id="pass" placeholder='password'
-       onChange = {this.handlePassChange}
-       value = {this.state.password}
-       />
-       <br/>
-        <button type="submit">Upload</button>
-      </form>
+      <div>
+        <form onSubmit={this.fileSubmitHandler}>
+          <input type="file" id="files" multiple />
+          Password: <input type="password" id="pass" placeholder='Password'
+                     onChange={this.handlePassChange}
+                     value={this.state.password}
+                    />
+          <button type="submit">Upload</button>
+        </form>
+        {this.state.errorMessage ? <Error message={this.state.errorMessage} /> : null }
+      </div>
     );
   }
 }
