@@ -7,15 +7,31 @@ import encrypt from '../helpers/encrypt.js';
 import promise from '../helpers/promise.js';
 import MongoFiles from '../api/mongoFiles.js';
 import Error from './error.js';
+import Password from './password.js';
 
 export default class Upload extends Component {
+  constructor (props) {
+    super(props);
+    // binds these functions to Upload's 'this'
+    this.handlePassword = this.handlePassword.bind(this);
+    this.errorMessageStateTimer = this.errorMessageStateTimer.bind(this);
+  }
+
   state = {
     uploaded: false,
     url: '',
-    password: '',
     iv: forge.random.getBytesSync(16),
     errorMessage: false,
+    password: '',
+    passwordValidated: true,
   };
+
+  handlePassword(pass, validated) {
+    this.setState({
+      password: pass,
+      passwordValidated: validated,
+    });
+  }
 
   generateUrl = () => shortid.generate();
 
@@ -23,26 +39,6 @@ export default class Upload extends Component {
     const messageDigest = forge.md.sha256.create();
     const fileSHA256 = messageDigest.update(file);
     return fileSHA256.digest().toHex().toString();
-  }
-
-  handlePasswordValidate = () => {
-    let formIsValid = true;
-    let err = '';
-    if (this.state.password === "") {
-      formIsValid = false;
-      err = 'Password cannot be blank.';
-      this.errorMessageStateTimer(err, 5000)
-    } else if (this.state.password.length < 5 ) {
-        formIsValid = false;
-        err = 'Password needs to be longer than 5 characters.';
-        this.errorMessageStateTimer(err, 5000);
-    }
-    return formIsValid;
-  }
-
-  handlePassChange = (event) => {
-    let pass = event.target.value;
-    this.setState({password: pass});
   }
 
   uploadEncryptedFiles = (fileInfo, files) => {
@@ -63,6 +59,7 @@ export default class Upload extends Component {
             url: fileData.url,
             fileLocation: fileData.fileLocation,
             fileName: fileData.fileName,
+            iv: this.state.iv,
           });
           if (i === files.length - 1) { // Last file in the array
             self.setState({ uploaded: true });
@@ -93,7 +90,7 @@ export default class Upload extends Component {
 
   fileSubmitHandler = (event) => {
     event.preventDefault();
-    if(this.handlePasswordValidate()){
+    if(this.state.passwordValidated) {
       this.setState({ url: this.generateUrl()});
       const fileList = document.querySelector('#files').files;
       if (fileList.length < 1) {
@@ -110,10 +107,7 @@ export default class Upload extends Component {
       <div>
         <form onSubmit={this.fileSubmitHandler}>
           <input type="file" id="files" multiple />
-          Password: <input type="password" id="pass" placeholder='Password'
-                     onChange={this.handlePassChange}
-                     value={this.state.password}
-                    />
+          <Password handlePassword={this.handlePassword} errorMessageStateTimer={this.errorMessageStateTimer} />
           <button type="submit">Upload</button>
         </form>
         {this.state.errorMessage ? <Error message={this.state.errorMessage} /> : null }

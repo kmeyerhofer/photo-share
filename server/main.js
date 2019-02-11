@@ -9,8 +9,6 @@ Meteor.startup(() => {
 Meteor.methods({
   fileUpload(fileData, encryptedFile) {
     let dirLocation = `${process.env.PWD}/tmp`;
-    console.log('received file');
-    console.log(fileData);
     fileData.fullFileLocation = `${dirLocation}/${fileData.fileLocation}`;
     fse.outputFile(fileData.fullFileLocation, encryptedFile, {encoding: null}, function (err) {
       if (err) throw err;
