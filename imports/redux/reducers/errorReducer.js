@@ -14,10 +14,14 @@ const errorReducer = (state = initialState, action) => {
         ...state,
         errors: state.errors.filter(item => item.id !== action.payload.id),
       };
+    case 'REMOVE_ERROR_BY_ID':
+      return {
+        ...state,
+        errors: state.errors.filter(item => item.id !== action.payload),
+      };
     default:
-    return state;
+      return state;
   }
-  // return state;
 };
 
 export default errorReducer;

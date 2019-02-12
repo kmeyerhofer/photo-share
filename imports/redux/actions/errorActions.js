@@ -11,3 +11,10 @@ export function removeError(error) {
     payload: error,
   };
 }
+
+export function removeErrorById(errorId) {
+  return {
+    type: 'REMOVE_ERROR_BY_ID',
+    payload: errorId,
+  }
+}
