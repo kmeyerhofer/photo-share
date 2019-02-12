@@ -1,16 +1,17 @@
 import forge from 'node-forge';
 
-export default function encrypt(file, password, iv) {  // list of file objects
+export default function encrypt(file, password, salt, iv) {  // list of file objects
   if (file === undefined || file === null){
     return;
   }
   if (password === undefined || password === null) {
     return;
   }
-  var key = forge.random.getBytesSync(16);
-  // var iv = forge.random.getBytesSync(16);
-  let encryptionFile = encryption(key, iv, file);
-  return forge.util.encode64(encryptionFile.data);
+  var key = forge.pkcs5.pbkdf2(password, salt, 8, 16);
+  var iv = forge.random.getBytesSync(16);
+
+  let encryptionFile = encryption(key, iv, file); // aka cipher.output
+  return forge.util.encode64(encryptionFile.getBytes());
 }
 
 function encryption(key, iv, file) {
