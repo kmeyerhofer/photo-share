@@ -8,6 +8,5 @@ export default function promise(file) {
       reject('Error reading file');
     };
     reader.readAsDataURL(file);
-    // reader.readAsArrayBuffer(file);
   });
 }
