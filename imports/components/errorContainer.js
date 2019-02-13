@@ -31,7 +31,7 @@ class ErrorContainer extends Component {
   render() {
     return (
       <div>
-        <h2>This is the Error Container component!</h2>
+        {/* <h2>This is the Error Container component!</h2> */}
         <ul>
           {this.renderEachError(this.props.errors)}
         </ul>
