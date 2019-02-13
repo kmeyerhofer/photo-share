@@ -15,6 +15,6 @@ Meteor.startup(() => {
         <Route path="/:filter?" component={App} />
       </BrowserRouter>
     </Provider>,
-    rootElement
+    rootElement,
   );
 });
