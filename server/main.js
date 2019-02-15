@@ -19,4 +19,4 @@ Meteor.publish('files', function(folderURL) {
   return MongoFiles.find({
     url: `${folderURL}`,
   });
-})
+});

@@ -1,16 +1,16 @@
 import SimpleSchema from 'simpl-schema';
 
 const schema = new SimpleSchema({
-  'url': {
+  url: {
     type: String,
   },
-  'fileLocation': {
+  fileLocation: {
     type: String,
   },
-  'fileName': {
+  fileName: {
     type: String,
   },
-  'iv': {
+  iv: {
     type: String,
     optional: true, // remove optional in future
   },
