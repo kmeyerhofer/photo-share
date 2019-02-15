@@ -9,6 +9,7 @@ import promise from '../helpers/promise.js';
 import { generateFileHash, random16Bytes, generateURL } from '../helpers/fileUtilities.js';
 import addErrorTimer from '../helpers/addErrorTimer.js';
 import Password from './password.js';
+import Loading from './loading.js';
 
 class Upload extends Component {
   constructor (props) {
@@ -19,6 +20,8 @@ class Upload extends Component {
 
   state = {
     uploaded: false,
+    loading: false,
+    statusMessage: '',
     url: '',
     iv: random16Bytes(),
     password: '',
@@ -35,6 +38,9 @@ class Upload extends Component {
         fileLocation: `${self.state.url}/${fileName}`,
         fileName,
       };
+      this.setState(
+        {statusMessage: `Encrypting file${files.length === 1 ? '' : 's'}...`}
+      );
       const encryptedFile = encrypt(files[i], this.state.password, this.state.iv);
       Meteor.call('fileUpload', fileData, encryptedFile, (error, result) => {
         if (error) {
@@ -47,7 +53,7 @@ class Upload extends Component {
             iv: this.state.iv,
           });
           if (i === files.length - 1) { // Last file in the array
-            self.setState({ uploaded: true });
+            self.setState({ uploaded: true, loading: false });
           }
         }
       });
@@ -70,6 +76,12 @@ class Upload extends Component {
     const fileList = document.querySelector('#files').files;
     if (this.state.passwordValidated && fileList.length >= 1) {
       this.setState({ url: generateURL() });
+      this.setState(
+        {
+          loading: true,
+          statusMessage:
+            `Loading file${fileList.length === 1 ? '' : 's'}...`}
+      );
       this.promiseFileLoader(fileList);
     } else if (fileList.length < 1) {
       addErrorTimer('You must select a file.');
@@ -95,7 +107,8 @@ class Upload extends Component {
           handlePassword={this.handlePassword}
           addErrorTimer={addErrorTimer}
         />
-        <button type="submit">Upload</button>
+        <button type="submit" disabled={this.state.loading}>Upload</button>
+        {this.state.loading && <Loading message={this.state.statusMessage} />}
       </form>
     );
   }
