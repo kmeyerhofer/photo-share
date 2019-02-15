@@ -7,13 +7,17 @@
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer",
     "lint": "eslint .",
-    "pretest": "npm run lint --silent"
+    "pretest": ""
   },
   "eslintConfig": {
     "extends": "@meteorjs/eslint-config-meteor"
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
+    "chai": "^4.2.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "faker": "^4.1.0",
     "fs-extra": "^7.0.1",
     "history": "^4.7.2",
     "meteor-node-stubs": "^0.4.1",
