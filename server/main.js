@@ -11,7 +11,6 @@ Meteor.methods({
   fileUpload(fileData, encryptedFile) {
     let dirLocation = `${process.env.PWD}/tmp`;
     console.log('received file');
-    console.log(encryptedFile);
     fileData.fullFileLocation = `${dirLocation}/${fileData.fileLocation}`; // use this endpoint for file loading
     fse.outputFile(fileData.fullFileLocation, encryptedFile, {encoding: 'base64'}, function (err) {
       if (err) throw err;

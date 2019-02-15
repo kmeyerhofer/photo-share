@@ -34,9 +34,10 @@ class Folder extends Component {
         <NoFileFound />
       );
     } else {
-      return files.map((file) => {
+      return files.map((file,i) => {
         return (
           <EachFile
+            key={i}
             id={file._id}
             name={file.fileName}
             location={file.fileLocation}

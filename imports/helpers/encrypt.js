@@ -7,8 +7,7 @@ export default function encrypt(file, password, salt, iv) {  // list of file obj
   if (password === undefined || password === null) {
     return;
   }
-  var key = forge.pkcs5.pbkdf2(password, salt, 8, 16);
-  var iv = forge.random.getBytesSync(16);
+  var key = forge.pkcs5.pbkdf2(password, salt, 16, 16);
 
   let encryptionFile = encryption(key, iv, file); // aka cipher.output
   return forge.util.encode64(encryptionFile.getBytes());
@@ -17,7 +16,7 @@ export default function encrypt(file, password, salt, iv) {  // list of file obj
 function encryption(key, iv, file) {
   var cipher = forge.cipher.createCipher('AES-CBC', key);
   cipher.start({iv:iv});
-  cipher.update(forge.util.createBuffer(file/*, 'raw'*/));
+  cipher.update(forge.util.createBuffer(file));
   cipher.finish();
   return cipher.output;
 }

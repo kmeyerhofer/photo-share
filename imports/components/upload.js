@@ -62,8 +62,9 @@ export default class Upload extends Component {
         salt: forge.util.encode64(this.state.salt),
         iv: forge.util.encode64(this.state.iv),
       });
-      var stripedFile = files[i].replace(/^data:image\/[a-z]+;base64,/,"");
-      let encryptedFile = encrypt(stripedFile, this.state.password, this.state.salt, this.state.iv);
+      // var stripedFile = files[i].replace(/^data:image\/[a-z]+;base64,/,"");
+      // console.log(files[i]);
+      let encryptedFile = encrypt(files[i], this.state.password, this.state.salt, this.state.iv);
       Meteor.call('fileUpload', fileData, encryptedFile, (error, result) => {
         if (error) {
           // ADD ERROR RESOLUTION
