@@ -47,7 +47,7 @@ export default class Upload extends Component {
   uploadEncryptedFiles = (fileInfo, files) => {
     let self = this;
     for (let i = 0; i < files.length; i += 1) {
-      console.log(files[i]);
+      // console.log(files[i]);
       const fileName = self.generateFileHash(files[i]);
       let fileData = {
         url: `${self.state.url}`,
