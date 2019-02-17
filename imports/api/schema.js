@@ -10,10 +10,12 @@ const schema = new SimpleSchema({
   'fileName': {
     type: String,
   },
+  'salt': {
+    type: String,
+  },
   'iv': {
     type: String,
-    optional: true, // remove optional in future
-  },
+  }
 });
 
 export default schema;

@@ -12,6 +12,7 @@ export default class Upload extends Component {
     uploaded: false,
     url: '',
     password: "",
+    salt: forge.random.getBytesSync(128),
     iv: forge.random.getBytesSync(16),
   };
 
@@ -46,6 +47,7 @@ export default class Upload extends Component {
   uploadEncryptedFiles = (fileInfo, files) => {
     let self = this;
     for (let i = 0; i < files.length; i += 1) {
+      // console.log(files[i]);
       const fileName = self.generateFileHash(files[i]);
       let fileData = {
         url: `${self.state.url}`,
@@ -57,9 +59,12 @@ export default class Upload extends Component {
         url: fileData.url,
         fileLocation: fileData.fileLocation,
         fileName: fileData.fileName,
+        salt: forge.util.encode64(this.state.salt),
+        iv: forge.util.encode64(this.state.iv),
       });
-
-      let encryptedFile = encrypt(files[i], this.state.password, this.state.iv);
+      // var stripedFile = files[i].replace(/^data:image\/[a-z]+;base64,/,"");
+      // console.log(files[i]);
+      let encryptedFile = encrypt(files[i], this.state.password, this.state.salt, this.state.iv);
       Meteor.call('fileUpload', fileData, encryptedFile, (error, result) => {
         if (error) {
           // ADD ERROR RESOLUTION
@@ -94,7 +99,7 @@ export default class Upload extends Component {
   }
 
   render() {
-    if (this.state.uploaded) return <Redirect to={this.state.url} />;
+    // if (this.state.uploaded) return <Redirect to={this.state.url} />;
     return (
       <form onSubmit={this.fileSubmitHandler}>
         <input type="file" id="files" multiple />
