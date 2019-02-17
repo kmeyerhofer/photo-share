@@ -24,16 +24,7 @@ class FileList extends Component {
       this.loadEachFileIntoState();
     } else {
       console.log('files are saved into state');
-      console.log(this.state.fileDataArray);
     }
-  }
-
-  renderEachFile = () => {
-    return this.state.fileDataArray.map( (element, i) => {
-      return(
-        <File key={i} fileData={element} />
-      );
-    });
   }
 
   loadEachFileFromServ = async () => {  // get a better understanding of this
@@ -52,7 +43,15 @@ class FileList extends Component {
     const files = this.props.files;
     let self = this;
     this.loadEachFileFromServ().then( (data) => {
-      this.setState({fileDataArray: [...this.state.fileDataArray, data], loaded:true});
+      this.setState({fileDataArray: data, loaded:true});
+    });
+  }
+
+  renderEachFile = () => {
+    return this.state.fileDataArray.map( (element, i) => {
+      return(
+        <File key={i} fileData={element} />
+      );
     });
   }
 
@@ -62,17 +61,13 @@ class FileList extends Component {
       return (
         <h2>loading...</h2>
       );
+    } else {
+      return(
+        <div>
+          {this.renderEachFile()}
+        </div>
+      );
     }
-    // this.loadEachFileIntoState();
-    return (
-      <div>
-        <ul>
-        {this.renderEachFile()}
-        </ul>
-      </div>
-    );
-    // this.loadEachFile();
-
   }
 }
 
