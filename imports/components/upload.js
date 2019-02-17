@@ -6,7 +6,7 @@ import { addError, removeError } from '../redux/actions/errorActions';
 import MongoFiles from '../api/mongoFiles.js';
 import encrypt from '../helpers/encrypt.js';
 import promise from '../helpers/promise.js';
-import { generateFileHash, random16Bytes, generateURL } from '../helpers/fileUtilities.js';
+import { generateFileHash, randomBytes, generateURL, encode64 } from '../helpers/fileUtilities.js';
 import addErrorTimer from '../helpers/addErrorTimer.js';
 import Password from './password.js';
 
@@ -20,7 +20,8 @@ class Upload extends Component {
   state = {
     uploaded: false,
     url: '',
-    iv: random16Bytes(),
+    iv: randomBytes(16),
+    salt: randomBytes(128),
     password: '',
     passwordError: 'Password cannot be blank.',
     passwordValidated: false,
@@ -35,7 +36,7 @@ class Upload extends Component {
         fileLocation: `${self.state.url}/${fileName}`,
         fileName,
       };
-      const encryptedFile = encrypt(files[i], this.state.password, this.state.iv);
+      const encryptedFile = encrypt(files[i], this.state.password, this.state.salt, this.state.iv);
       Meteor.call('fileUpload', fileData, encryptedFile, (error, result) => {
         if (error) {
           addErrorTimer(error.message);
@@ -44,7 +45,8 @@ class Upload extends Component {
             url: fileData.url,
             fileLocation: fileData.fileLocation,
             fileName: fileData.fileName,
-            iv: this.state.iv,
+            salt: encode64(this.state.salt),
+            iv: encode64(this.state.iv),
           });
           if (i === files.length - 1) { // Last file in the array
             self.setState({ uploaded: true });
@@ -87,7 +89,7 @@ class Upload extends Component {
   }
 
   render() {
-    if (this.state.uploaded) return <Redirect to={this.state.url} />;
+    // if (this.state.uploaded) return <Redirect to={this.state.url} />;
     return (
       <form onSubmit={this.fileSubmitHandler}>
         <input type="file" id="files" multiple />
