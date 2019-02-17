@@ -14,9 +14,9 @@ export default function decrypt(base64EncryptedFile, password, encodedSalt, enco
   decipher.update(forge.util.createBuffer(decoded));
   decipher.finish();
 
-  console.log('decrypted data:');
-  console.log(decipher.output.getBytes());
+  // console.log('decrypted data:');
+  // console.log(decipher.output.getBytes());
 
-  // return decipher.output.getBytes()
+  return decipher.output.getBytes()
 
 }
