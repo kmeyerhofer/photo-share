@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ErrorContainer from './errorContainer.js';
 
@@ -13,7 +13,7 @@ export default function App() {
       <h1>hello this works</h1>
       <Switch>
         <Route exact path="/" component={Upload} />
-        <Route path='/fileList/:folderID' component={FileList} />
+        <Route path="/fileList/:folderID" component={FileList} />
         <Route path="/:folderID" component={Folder} />
       </Switch>
     </ErrorContainer>

@@ -1,38 +1,32 @@
 import { Meteor } from 'meteor/meteor';
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
-import MongoFiles from '../api/mongoFiles.js';
 import { withTracker } from 'meteor/react-meteor-data';
+import MongoFiles from '../api/mongoFiles.js';
 import decrypt from '../helpers/decrypt.js';
 import File from './file.js';
-import { Promise } from 'meteor/promise';
 import { callWithPromise } from '../helpers/loadFilePromise.js';
 
 const password = 'testingkey';
 
 class FileList extends Component {
-
   state = {
     fileDataArray: [],
     loaded: false,
   };
 
-
   componentDidUpdate = (prevProps, prevState) => {
-    console.log('component did update');
-    if(!prevState.loaded) {
+    if (!prevState.loaded) {
       this.loadEachFileIntoState();
     } else {
       console.log('files are saved into state');
     }
   }
 
-  loadEachFileFromServ = async () => {  // get a better understanding of this
+  loadEachFileFromServ = async () => { // get a better understanding of this
     const files = this.props.files;
-    var self = this;
     let fileDataArr = [];
     let base64EncodedFile;
-    for (var i=0; i < files.length; i++){
+    for (let i=0; i < files.length; i++){
         base64EncodedFile = await callWithPromise('fileLoad', files[i].fileLocation); // returns a promise, await on promise
         fileDataArr.push(decrypt(base64EncodedFile, password, files[i].salt, files[i].iv));
     }
@@ -41,14 +35,13 @@ class FileList extends Component {
 
   loadEachFileIntoState = () => {
     const files = this.props.files;
-    let self = this;
-    this.loadEachFileFromServ().then( (data) => {
-      this.setState({fileDataArray: data, loaded:true});
+    this.loadEachFileFromServ().then((data) => {
+      this.setState({fileDataArray: data, loaded: true});
     });
   }
 
   renderEachFile = () => {
-    return this.state.fileDataArray.map( (element, i) => {
+    return this.state.fileDataArray.map((element, i) => {
       return(
         <File key={i} fileData={element} />
       );
@@ -57,7 +50,7 @@ class FileList extends Component {
 
 
   render() {
-    if (!this.props.loading){
+    if (!this.props.loading) {
       return (
         <h2>loading...</h2>
       );

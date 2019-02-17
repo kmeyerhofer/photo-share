@@ -89,7 +89,7 @@ class Upload extends Component {
   }
 
   render() {
-    // if (this.state.uploaded) return <Redirect to={this.state.url} />;
+    if (this.state.uploaded) return <Redirect to={`fileList/${this.state.url}`} />;
     return (
       <form onSubmit={this.fileSubmitHandler}>
         <input type="file" id="files" multiple />
