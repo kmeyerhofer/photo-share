@@ -14,15 +14,15 @@ class Folder extends Component {
 
   renderEachFile = () => {
     const files = this.props.files;
-    let joined = [];
-    for (var i = 0; i < files.length; i++){
-      let salt = files[i].salt;
-      let iv = files[i].iv;
+    const joined = [];
+    for (let i = 0; i < files.length; i++) {
+      const salt = files[i].salt;
+      const iv = files[i].iv;
       Meteor.call('fileLoad', files[i].fileLocation, (error, result) => {
-        if(error) {
+        if (error) {
           alert(error);
-        }else{
-          let encryptedFile = result
+        } else{
+          const encryptedFile = result
           decrypt(encryptedFile, password, salt, iv);
         }
       });
@@ -34,10 +34,10 @@ class Folder extends Component {
         <NoFileFound />
       );
     } else {
-      return files.map((file,i) => {
+      return files.map((file) => {
         return (
           <EachFile
-            key={i}
+            key={file._id}
             id={file._id}
             name={file.fileName}
             location={file.fileLocation}

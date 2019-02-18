@@ -1,75 +1,53 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-import forge from 'node-forge';
-import shortid from 'shortid';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addError, removeError } from '../redux/actions/errorActions';
+import MongoFiles from '../api/mongoFiles.js';
 import encrypt from '../helpers/encrypt.js';
 import promise from '../helpers/promise.js';
-import MongoFiles from '../api/mongoFiles.js';
+import { generateFileHash, randomBytes, generateURL, encode64 } from '../helpers/fileUtilities.js';
+import addErrorTimer from '../helpers/addErrorTimer.js';
+import Password from './password.js';
 
-export default class Upload extends Component {
+class Upload extends Component {
+  constructor (props) {
+    super(props);
+    addErrorTimer = addErrorTimer.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
+  }
+
   state = {
     uploaded: false,
     url: '',
-    password: "",
-    salt: forge.random.getBytesSync(128),
-    iv: forge.random.getBytesSync(16),
+    iv: randomBytes(16),
+    salt: randomBytes(128),
+    password: '',
+    passwordError: 'Password cannot be blank.',
+    passwordValidated: false,
   };
 
-  generateUrl = () => shortid.generate();
-
-  generateFileHash = (file) => {
-    const messageDigest = forge.md.sha256.create();
-    const fileSHA256 = messageDigest.update(file);
-    return fileSHA256.digest().toHex().toString();
-  }
-
-  handlePasswordValidate = () => {
-    let formIsValid = true;
-    let err = '';
-    if (this.state.password === "") {
-      formIsValid = false;
-      alert("password cannot be blank");
-    }
-    if (this.state.password.length < 5 ) {
-      formIsValid = false;
-      alert("password needs to be longer than 5 characters");
-    }
-    this.setState({error: err})
-    return formIsValid;
-  }
-
-  handlePassChange = (event) => {
-    let pass = event.target.value;
-    this.setState({password: pass});
-  }
-
   uploadEncryptedFiles = (fileInfo, files) => {
-    let self = this;
+    const self = this;
     for (let i = 0; i < files.length; i += 1) {
-      // console.log(files[i]);
-      const fileName = self.generateFileHash(files[i]);
-      let fileData = {
+      const fileName = generateFileHash(files[i]);
+      const fileData = {
         url: `${self.state.url}`,
         fileLocation: `${self.state.url}/${fileName}`,
         fileName,
       };
-      // console.log(fileData);
-      MongoFiles.insert({
-        url: fileData.url,
-        fileLocation: fileData.fileLocation,
-        fileName: fileData.fileName,
-        salt: forge.util.encode64(this.state.salt),
-        iv: forge.util.encode64(this.state.iv),
-      });
-      // var stripedFile = files[i].replace(/^data:image\/[a-z]+;base64,/,"");
-      // console.log(files[i]);
-      let encryptedFile = encrypt(files[i], this.state.password, this.state.salt, this.state.iv);
+      const encryptedFile = encrypt(files[i], this.state.password, this.state.salt, this.state.iv);
       Meteor.call('fileUpload', fileData, encryptedFile, (error, result) => {
         if (error) {
-          // ADD ERROR RESOLUTION
+          addErrorTimer(error.message);
         } else {
-          // console.log('file uploaded');
+          MongoFiles.insert({
+            url: fileData.url,
+            fileLocation: fileData.fileLocation,
+            fileName: fileData.fileName,
+            salt: encode64(this.state.salt),
+            iv: encode64(this.state.iv),
+          });
           if (i === files.length - 1) { // Last file in the array
             self.setState({ uploaded: true });
           }
@@ -79,37 +57,67 @@ export default class Upload extends Component {
   }
 
   promiseFileLoader = async (fileList) => {
-    let self = this;
-    let fileListArr = [];
+    const self = this;
+    const fileListArr = [];
     for (let i = 0; i < fileList.length; i += 1) {
       fileListArr.push(promise(fileList[i]));
     }
-    Promise.all(fileListArr).then(values => {
+    Promise.all(fileListArr).then((values) => {
       self.uploadEncryptedFiles(fileList, values);
     });
   }
 
   fileSubmitHandler = (event) => {
     event.preventDefault();
-    if(this.handlePasswordValidate()){
-      this.setState({ url: this.generateUrl()});
-      const fileList = document.querySelector('#files').files;
+    const fileList = document.querySelector('#files').files;
+    if (this.state.passwordValidated && fileList.length >= 1) {
+      this.setState({ url: generateURL() });
       this.promiseFileLoader(fileList);
+    } else if (fileList.length < 1) {
+      addErrorTimer('You must select a file.');
+    } else if (!this.state.passwordValidated) {
+      addErrorTimer(this.state.passwordError);
     }
   }
 
+  handlePassword(passwordObj) {
+    this.setState({
+      password: passwordObj.password,
+      passwordValidated: passwordObj.passwordValid,
+      passwordError: passwordObj.message,
+    });
+  }
+
   render() {
-    // if (this.state.uploaded) return <Redirect to={this.state.url} />;
+    if (this.state.uploaded) return <Redirect to={`fileList/${this.state.url}`} />;
     return (
       <form onSubmit={this.fileSubmitHandler}>
         <input type="file" id="files" multiple />
-        Password: <input type="password" id="pass" placeholder='password'
-       onChange = {this.handlePassChange}
-       value = {this.state.password}
-       />
-       <br/>
+        <Password
+          handlePassword={this.handlePassword}
+          addErrorTimer={addErrorTimer}
+        />
         <button type="submit">Upload</button>
       </form>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    errors: state.errorReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addError: (error) => {
+      dispatch(addError(error));
+    },
+    removeError: (error) => {
+      dispatch(removeError(error));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Upload);

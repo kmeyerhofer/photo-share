@@ -1,24 +1,21 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
-
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import ErrorContainer from './errorContainer.js';
 
 // React Components
 import Upload from './upload.js';
 import Folder from './folder.js';
 import FileList from './fileList.js';
 
-export default class App extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <div>
-          <Switch>
-            <Route exact path='/' component={Upload} />
-            <Route path='/fileList/:folderID' component={FileList} />
-            <Route path='/:folderID' component={Folder} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    );
-  }
+export default function App() {
+  return (
+    <ErrorContainer>
+      <h1>hello this works</h1>
+      <Switch>
+        <Route exact path="/" component={Upload} />
+        <Route path="/fileList/:folderID" component={FileList} />
+        <Route path="/:folderID" component={Folder} />
+      </Switch>
+    </ErrorContainer>
+  );
 }
