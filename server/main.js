@@ -9,16 +9,16 @@ Meteor.methods({
   fileUpload(fileData, encryptedFile) {
     const dirLocation = `${process.env.PWD}/tmp`;
     fileData.fullFileLocation = `${dirLocation}/${fileData.fileLocation}`; // use this endpoint for file loading
-    fse.outputFile(fileData.fullFileLocation, encryptedFile, {encoding: 'base64'}, function (err) {
+    fse.outputFile(fileData.fullFileLocation, encryptedFile, { encoding: 'base64' }, function (err) {
       if (err) throw err;
     });
   },
 
   fileLoad(fullFileLoc) {
-    let dirLocation = `${process.env.PWD}/tmp`;
-    let fullFilePath = dirLocation + '/' + fullFileLoc;
-    let loadFile = Meteor.wrapAsync(fse.readFile);
-    let result = loadFile(fullFilePath, {encoding: 'base64'});
+    const dirLocation = `${process.env.PWD}/tmp`;
+    const fullFilePath = dirLocation + '/' + fullFileLoc;
+    const loadFile = Meteor.wrapAsync(fse.readFile);
+    const result = loadFile(fullFilePath, { encoding: 'base64' });
     return result;
   },
 });
