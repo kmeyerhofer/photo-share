@@ -3,13 +3,13 @@ import blobUtil from 'blob-util';
 import { callWithPromise } from '../helpers/loadFilePromise.js';
 import decrypt from '../helpers/decrypt.js';
 
-var stop = false;
-
 export default class File extends Component {
   state = {
     fileData: '',
     loaded: false,
     decrypted: false,
+    blobCreated: false,
+    blobURL: '',
   };
 
   componentDidMount() {
@@ -21,7 +21,14 @@ export default class File extends Component {
   componentDidUpdate = () => {
     if (this.props.passwordEntered && !this.state.decrypted) {
       this.decryptFile();
+    } else if (!this.state.blobCreated) {
+      this.createBlob();
     }
+  }
+
+  componentWillUnmount() {
+    window.URL = window.URL || window.webkitURL;
+    window.URL.revokeObjectURL(this.state.blobURL);
   }
 
   loadEachFileFromServ = async () => { // get a better understanding of this
@@ -45,15 +52,20 @@ export default class File extends Component {
     }));
   }
 
+  createBlob = () => {
+    window.URL = window.URL || window.webkitURL;
+    const strippedBase64 = this.state.fileData.split(',')[1].replace(/\s/g, '');
+    const blob = blobUtil.base64StringToBlob(strippedBase64);
+    this.setState({
+      blobURL: window.URL.createObjectURL(blob),
+      blobCreated: true,
+    });
+  }
+
   renderFile = () => {
     if (this.state.decrypted) {
-      window.URL = window.URL || window.webkitURL;
-      const strippedBase64 = this.state.fileData.split(',')[1].replace(/\s/g, '');
-      const blob = blobUtil.base64StringToBlob(strippedBase64);
-      // console.log(blob);
-      stop = true;
       return (
-        <img src={window.URL.createObjectURL(blob)} />
+        <img src={this.state.blobURL} />
       );
     } else {
       return <h2>loading...last render</h2>;
