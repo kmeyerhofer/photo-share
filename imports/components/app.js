@@ -13,8 +13,8 @@ export default function App() {
       <h1>hello this works</h1>
       <Switch>
         <Route exact path="/" component={Upload} />
-        <Route path="/fileList/:folderID" component={FileList} />
-        <Route path="/:folderID" component={Folder} />
+        <Route path="/:folderID" component={FileList} />
+        {/* <Route path="/:folderID" component={Folder} /> */}
       </Switch>
     </ErrorContainer>
   );

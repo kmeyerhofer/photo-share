@@ -9,9 +9,7 @@ import decrypt from '../helpers/decrypt.js';
 
 const password = 'testingkey';
 
-
 class Folder extends Component {
-
   renderEachFile = () => {
     const files = this.props.files;
     const joined = [];
