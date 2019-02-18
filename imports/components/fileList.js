@@ -31,17 +31,17 @@ class FileList extends Component {
   }
 
   render() {
-    // if (!this.props.loading) {
-    //   return (
-    //     <h2>loading...</h2>
-    //   );
-    // } else {
+    if (!this.props.loading) {
+      return (
+        <h2>loading...</h2>
+      );
+    } else {
       return (
         <div>
           {this.renderEachFile()}
         </div>
       );
-  //   }
+    }
   }
 }
 
