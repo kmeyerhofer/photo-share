@@ -5,10 +5,29 @@ import { withTracker } from 'meteor/react-meteor-data';
 import MongoFiles from '../api/mongoFiles.js';
 import EachFile from './eachFile.js';
 import NoFileFound from './noFileFound.js';
+import decrypt from '../helpers/decrypt.js';
+
+const password = 'testingkey';
+
 
 class Folder extends Component {
+
   renderEachFile = () => {
     const files = this.props.files;
+    const joined = [];
+    for (let i = 0; i < files.length; i++) {
+      const salt = files[i].salt;
+      const iv = files[i].iv;
+      Meteor.call('fileLoad', files[i].fileLocation, (error, result) => {
+        if (error) {
+          alert(error);
+        } else{
+          const encryptedFile = result
+          decrypt(encryptedFile, password, salt, iv);
+        }
+      });
+    }
+
     if (files.length <= 0) {
       // Nothing found in database
       return (

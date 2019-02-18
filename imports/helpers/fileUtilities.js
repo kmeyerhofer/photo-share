@@ -7,10 +7,14 @@ export function generateFileHash(file) {
   return fileSHA256.digest().toHex().toString();
 }
 
-export function random16Bytes() {
-  return forge.random.getBytesSync(16);
+export function randomBytes(bytes) {
+  return forge.random.getBytesSync(bytes);
 }
 
 export function generateURL() {
   return shortid.generate();
+}
+
+export function encode64(string) {
+  return forge.util.encode64(string);
 }
