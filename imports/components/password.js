@@ -25,10 +25,10 @@ export default class Password extends Component {
     };
     if (pass.length === 0) {
       result.passwordValid = false;
-      result.message = 'Password cannot be blank.';
+      result.message = "Password cannot be blank.";
     } else if (pass.length <= 5) {
       result.passwordValid = false;
-      result.message = 'Password needs to be longer than 5 characters.';
+      result.message = "Password needs to be longer than 5 characters.";
     }
     return result;
   }

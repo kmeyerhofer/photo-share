@@ -13,12 +13,16 @@ import { addError, removeError } from '../redux/actions/errorActions';
 // const password = 'testingkey';
 
 class FileList extends Component {
+
+  constructor(props) {
+    super(props);
+    addErrorTimer = addErrorTimer.bind(this);
+  }
+
   state = {
-    // fileDataArray: [],
-    // loaded: false,
     passwordEntered: false,
     password: '',
-    imageRendered: true,
+    passwordValid: false,
   };
 
   renderEachFile = () => {
@@ -31,21 +35,25 @@ class FileList extends Component {
             fileData={file}
             password={this.state.password}
             passwordEntered={this.state.passwordEntered}
-            imageRender={this.imageCouldNotRender}
+            imageCouldNotRender={this.imageCouldNotRender}
           />
         );
       });
   }
 
   handlePassword = (passwordObj) => { //returned as result from password component
-    this.setState({
-      password: passwordObj.password,
-      passwordEntered: true,
-    });
+    if(!passwordObj.passwordValid){
+      addErrorTimer(passwordObj.message)
+    } else {
+      this.setState({
+        password: passwordObj.password,
+        passwordEntered: true,
+      });
+    }
   }
 
   imageCouldNotRender = () => {
-    alert("the password is not correct");
+    addErrorTimer('password is not correct');
     this.setState({passwordEntered: false});
   }
 
@@ -57,7 +65,9 @@ class FileList extends Component {
     } else if(!this.state.passwordEntered) {
       return (
         <div>
-        <Password handlePassword={this.handlePassword} />
+        <Password handlePassword={this.handlePassword}
+        addErrorTimer={addErrorTimer}
+        />
         </div>
       );
     } else {
@@ -70,7 +80,7 @@ class FileList extends Component {
   }
 }
 
-export default withTracker(() => {
+const fileListWithTracker = withTracker(() => {
   const urlParam = window.location.pathname.slice(1);
   const fileSub = Meteor.subscribe('files', urlParam);
   return {
@@ -79,21 +89,21 @@ export default withTracker(() => {
   };
 })(FileList);
 
-// const mapStateToProps = (state) => {
-//   return{
-//     errors: state.errorReducer,
-//   };
-// };
-//
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addError: (error) => {
-//       dispatch(addError(error));
-//     },
-//     removeError: (error) => {
-//       dispatch(removeError(error));
-//     },
-//   };
-// };
-//
-// export const connect(mapStateToProps, mapDispatchToProps)(FileList);
+const mapStateToProps = (state) => {
+  return {
+    errors: state.errorReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addError: (error) => {
+      dispatch(addError(error));
+    },
+    removeError: (error) => {
+      dispatch(removeError(error));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(fileListWithTracker);

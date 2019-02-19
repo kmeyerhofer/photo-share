@@ -27,7 +27,7 @@ export default class File extends Component {
       }
       catch(err) {
         console.log("incorrect password");
-        this.props.imageRender();
+        this.props.imageCouldNotRender();
       }
     }
   }
