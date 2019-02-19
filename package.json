@@ -18,6 +18,7 @@
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "faker": "^4.1.0",
+    "blob-util": "^2.0.2",
     "fs-extra": "^7.0.1",
     "history": "^4.7.2",
     "meteor-node-stubs": "^0.4.1",
