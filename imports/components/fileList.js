@@ -18,10 +18,10 @@ class FileList extends Component {
     // loaded: false,
     passwordEntered: false,
     password: '',
+    imageRendered: true,
   };
 
   renderEachFile = () => {
-    if (this.state.passwordEntered) {
       console.log('this is happening');
       return this.props.files.map((file) => {
         // console.log(file);
@@ -31,22 +31,22 @@ class FileList extends Component {
             fileData={file}
             password={this.state.password}
             passwordEntered={this.state.passwordEntered}
+            imageRender={this.imageCouldNotRender}
           />
         );
       });
-    } else {
-      return(
-        <div> enter the right password m8 </div>
-      );
-    }
   }
 
   handlePassword = (passwordObj) => { //returned as result from password component
-    console.log(passwordObj);
     this.setState({
       password: passwordObj.password,
       passwordEntered: true,
     });
+  }
+
+  imageCouldNotRender = () => {
+    alert("the password is not correct");
+    this.setState({passwordEntered: false});
   }
 
   render() {
