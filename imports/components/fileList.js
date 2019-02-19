@@ -4,6 +4,10 @@ import { withTracker } from 'meteor/react-meteor-data';
 import MongoFiles from '../api/mongoFiles.js';
 // import decrypt from '../helpers/decrypt.js';
 import File from './file.js';
+import Password from './password.js'
+import addErrorTimer from '../helpers/addErrorTimer.js';
+import { connect } from 'react-redux';
+import { addError, removeError } from '../redux/actions/errorActions';
 // import { callWithPromise } from '../helpers/loadFilePromise.js';
 
 // const password = 'testingkey';
@@ -12,21 +16,36 @@ class FileList extends Component {
   state = {
     // fileDataArray: [],
     // loaded: false,
-    passwordEntered: true,
-    password: 'testingkey',
+    passwordEntered: false,
+    password: '',
   };
 
   renderEachFile = () => {
-    return this.props.files.map((file) => {
-      // console.log(file);
-      return (
-        <File
-          key={file._id}
-          fileData={file}
-          password={this.state.password}
-          passwordEntered={this.state.passwordEntered}
-        />
+    if (this.state.passwordEntered) {
+      console.log('this is happening');
+      return this.props.files.map((file) => {
+        // console.log(file);
+        return (
+          <File
+            key={file._id}
+            fileData={file}
+            password={this.state.password}
+            passwordEntered={this.state.passwordEntered}
+          />
+        );
+      });
+    } else {
+      return(
+        <div> enter the right password m8 </div>
       );
+    }
+  }
+
+  handlePassword = (passwordObj) => { //returned as result from password component
+    console.log(passwordObj);
+    this.setState({
+      password: passwordObj.password,
+      passwordEntered: true,
     });
   }
 
@@ -34,6 +53,12 @@ class FileList extends Component {
     if (!this.props.loading) {
       return (
         <h2>loading...</h2>
+      );
+    } else if(!this.state.passwordEntered) {
+      return (
+        <div>
+        <Password handlePassword={this.handlePassword} />
+        </div>
       );
     } else {
       return (
@@ -53,3 +78,22 @@ export default withTracker(() => {
     files: MongoFiles.find({}).fetch(),
   };
 })(FileList);
+
+// const mapStateToProps = (state) => {
+//   return{
+//     errors: state.errorReducer,
+//   };
+// };
+//
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addError: (error) => {
+//       dispatch(addError(error));
+//     },
+//     removeError: (error) => {
+//       dispatch(removeError(error));
+//     },
+//   };
+// };
+//
+// export const connect(mapStateToProps, mapDispatchToProps)(FileList);

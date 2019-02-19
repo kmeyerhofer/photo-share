@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 
 export default class Password extends Component {
-  handlePassChange = (event) => {
-    const pass = event.target.value;
-    this.props.handlePassword(this.handlePasswordValidate(pass));
+
+  state = {
+    password: "",
+    disableButton: false, // can use this later to disable the button
+  }
+
+  handlePassChange = (pass) => {
+    this.setState({password: pass.target.value});
+    // this.props.handlePassword(this.handlePasswordValidate(pass));
+  }
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    this.props.handlePassword(this.handlePasswordValidate(this.state.password));
   }
 
   handlePasswordValidate = (pass) => {
@@ -24,7 +35,12 @@ export default class Password extends Component {
 
   render() {
     return (
-      <input type="password" id="pass" placeholder="Password" onChange={this.handlePassChange} />
+    <div>
+      <form onSubmit={this.handleFormSubmit}>
+        <input type="password" id="pass" placeholder="Password" value={this.state.password} onChange={this.handlePassChange}/>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
     );
   }
 }

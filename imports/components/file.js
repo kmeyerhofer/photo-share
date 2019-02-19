@@ -22,7 +22,12 @@ export default class File extends Component {
     if (this.props.passwordEntered && !this.state.decrypted) {
       this.decryptFile();
     } else if (!this.state.blobCreated) {
-      this.createBlob();
+      try {
+        this.createBlob();
+      }
+      catch(err) {
+        console.log("incorrect password");
+      }
     }
   }
 
