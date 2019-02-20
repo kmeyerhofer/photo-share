@@ -7,10 +7,17 @@
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix --ext .js",
     "pretest": ""
   },
   "eslintConfig": {
-    "extends": "@meteorjs/eslint-config-meteor"
+    "extends": "@meteorjs/eslint-config-meteor",
+    "root": true,
+    "rules": {
+      "react/destructuring-assignment": ["enabled", "never"],
+      "react/prop-types": 0,
+      "prefer-destructuring": 0
+    }
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
