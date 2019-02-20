@@ -8,7 +8,7 @@ import encrypt from '../helpers/encrypt.js';
 import promise from '../helpers/promise.js';
 import { generateFileHash, randomBytes, generateURL, encode64 } from '../helpers/fileUtilities.js';
 import addErrorTimer from '../helpers/addErrorTimer.js';
-import Password from './password.js';
+import Password from './passwordEncrypt.js';
 import Loading from './loading.js';
 
 class Upload extends Component {
