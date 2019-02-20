@@ -8,6 +8,8 @@ import addErrorTimer from '../helpers/addErrorTimer.js';
 import { connect } from 'react-redux';
 import { addError, removeError } from '../redux/actions/errorActions';
 import Loading from './loading.js';
+import {CommentBox} from './commentBox';
+import {generateURL} from '../helpers/fileUtilities.js';
 
 
 class FileList extends Component {
@@ -24,17 +26,25 @@ class FileList extends Component {
   };
 
   renderEachFile = () => {
-      return this.props.files.map((file) => {
+    return this.props.files.map((file , index) => {
         return (
+        <div key={index}>
           <File
-            key={file._id}
+            key={generateURL()}
             fileData={file}
             password={this.state.password}
             passwordEntered={this.state.passwordEntered}
             imageCouldNotRender={this.imageCouldNotRender}
-          />
+            />
+
+            <CommentBox
+              key={generateURL()}
+              id={file._id}
+            />
+          </div>
         );
-      });
+      }
+    ); // end of file map
   }
 
   handlePassword = (passwordObj) => {
@@ -75,6 +85,9 @@ class FileList extends Component {
     }
   }
 }
+
+// subscriptions(redux and meteor)
+
 
 const fileListWithTracker = withTracker(() => {
   const urlParam = window.location.pathname.slice(1);
