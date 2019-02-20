@@ -27,7 +27,6 @@ export default class File extends Component {
         this.createBlob();
       }
       catch(err) {
-        console.log("incorrect password");
         this.props.imageCouldNotRender();
       }
     }
