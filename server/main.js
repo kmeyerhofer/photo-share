@@ -16,7 +16,7 @@ Meteor.methods({
 
   fileLoad(fullFileLoc) {
     const dirLocation = `${process.env.PWD}/tmp`;
-    const fullFilePath = dirLocation + '/' + fullFileLoc;
+    const fullFilePath = `${dirLocation}/${fullFileLoc}`;
     const loadFile = Meteor.wrapAsync(fse.readFile);
     const result = loadFile(fullFilePath, { encoding: 'base64' });
     return result;

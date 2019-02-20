@@ -25,8 +25,7 @@ export default class File extends Component {
     } else if (!this.state.blobCreated) {
       try {
         this.createBlob();
-      }
-      catch(err) {
+      } catch (err) {
         this.props.imageCouldNotRender();
       }
     }
@@ -52,7 +51,7 @@ export default class File extends Component {
 
   decryptFile = () => {
     const file = this.props.fileData;
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       fileData: decrypt(prevState.fileData, this.props.password, file.salt, file.iv),
       decrypted: true,
     }));
@@ -73,11 +72,10 @@ export default class File extends Component {
       return (
         <img src={this.state.blobURL} />
       );
-    } else {
-      return(
-        <Loading message={'decrypting file'} />
-      );
     }
+    return (
+      <Loading message="decrypting file" />
+    );
   }
 
   render() {

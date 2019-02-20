@@ -19,8 +19,8 @@ class Folder extends Component {
       Meteor.call('fileLoad', files[i].fileLocation, (error, result) => {
         if (error) {
           alert(error);
-        } else{
-          const encryptedFile = result
+        } else {
+          const encryptedFile = result;
           decrypt(encryptedFile, password, salt, iv);
         }
       });
@@ -32,17 +32,15 @@ class Folder extends Component {
         <NoFileFound />
       );
     }
-    return files.map((file) => {
-      return (
-        <EachFile
-          key={file._id}
-          id={file._id}
-          name={file.fileName}
-          location={file.fileLocation}
-          url={file.url}
-        />
-      );
-    });
+    return files.map(file => (
+      <EachFile
+        key={file._id}
+        id={file._id}
+        name={file.fileName}
+        location={file.fileLocation}
+        url={file.url}
+      />
+    ));
   }
 
   render() {
