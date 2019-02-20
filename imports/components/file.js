@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import blobUtil from 'blob-util';
 import { callWithPromise } from '../helpers/loadFilePromise.js';
 import decrypt from '../helpers/decrypt.js';
+import Loading from './loading.js';
 
 export default class File extends Component {
   state = {
@@ -74,7 +75,9 @@ export default class File extends Component {
         <img src={this.state.blobURL} />
       );
     } else {
-      return <h2>loading...last render</h2>;
+      return(
+        <Loading message={'decrypting file'} />
+      );
     }
   }
 

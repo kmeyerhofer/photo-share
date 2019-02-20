@@ -7,6 +7,7 @@ import Password from './passwordDecrypt.js'
 import addErrorTimer from '../helpers/addErrorTimer.js';
 import { connect } from 'react-redux';
 import { addError, removeError } from '../redux/actions/errorActions';
+import Loading from './loading.js';
 
 
 class FileList extends Component {
@@ -55,7 +56,7 @@ class FileList extends Component {
   render() {
     if (!this.props.loading) {
       return (
-        <h2>loading...</h2>
+        <Loading message={'loading files'} />
       );
     } else if(!this.state.passwordEntered) {
       return (
