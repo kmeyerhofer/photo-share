@@ -4,12 +4,11 @@ export default class Password extends Component {
 
   state = {
     password: "",
-    disableButton: false, // can use this later to disable the button
+    disableButton: false,
   }
 
   handlePassChange = (pass) => {
     this.setState({password: pass.target.value});
-    // this.props.handlePassword(this.handlePasswordValidate(pass));
   }
 
   handleFormSubmit = (event) => {

@@ -2,15 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import MongoFiles from '../api/mongoFiles.js';
-// import decrypt from '../helpers/decrypt.js';
 import File from './file.js';
-import Password from './password.js'
+import Password from './passwordDecrypt.js'
 import addErrorTimer from '../helpers/addErrorTimer.js';
 import { connect } from 'react-redux';
 import { addError, removeError } from '../redux/actions/errorActions';
-// import { callWithPromise } from '../helpers/loadFilePromise.js';
 
-// const password = 'testingkey';
 
 class FileList extends Component {
 
@@ -26,9 +23,7 @@ class FileList extends Component {
   };
 
   renderEachFile = () => {
-      console.log('this is happening');
       return this.props.files.map((file) => {
-        // console.log(file);
         return (
           <File
             key={file._id}
@@ -41,7 +36,7 @@ class FileList extends Component {
       });
   }
 
-  handlePassword = (passwordObj) => { //returned as result from password component
+  handlePassword = (passwordObj) => {
     if(!passwordObj.passwordValid){
       addErrorTimer(passwordObj.message)
     } else {
