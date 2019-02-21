@@ -10,14 +10,29 @@
     "lint:fix": "eslint . --fix --ext .js",
     "pretest": ""
   },
+  "pre-commit": {
+    "colors": true,
+    "run": "lint:fix"
+  },
   "eslintConfig": {
     "extends": "@meteorjs/eslint-config-meteor",
     "root": true,
     "rules": {
       "react/destructuring-assignment": ["enabled", "never"],
       "react/prop-types": 0,
-      "prefer-destructuring": 0
-    }
+      "prefer-destructuring": 0,
+      "no-loop-func": 0,
+      "jsx-a11y/click-events-have-key-events": 0,
+      "jsx-a11y/no-noninteractive-element-interactions": 0
+    },
+    "overrides": [
+      {
+        "files": ["tests/*"],
+        "rules": {
+          "no-undef": 0
+        }
+      }
+    ]
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",

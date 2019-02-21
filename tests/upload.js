@@ -6,7 +6,7 @@ import Upload from '../imports/components/upload.js';
 describe('Upload', () => {
   it('should render', () => {
     const item = shallow(<Upload />);
-    console.log('hi');
+    // console.log('hi');
     assert(item.hasClass());
   });
 });

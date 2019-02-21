@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 export default class Password extends Component {
   state = {
     password: '',
-    disableButton: false,
   }
 
   handlePassChange = (pass) => {

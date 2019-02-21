@@ -45,7 +45,7 @@ class Upload extends Component {
         { statusMessage: `Encrypting file${files.length === 1 ? '' : 's'}...` },
       );
       const encryptedFile = encrypt(files[i], this.state.password, this.state.salt, this.state.iv);
-      Meteor.call('fileUpload', fileData, encryptedFile, (error, result) => {
+      Meteor.call('fileUpload', fileData, encryptedFile, (error) => {
         if (error) {
           addErrorTimer(error.message);
         } else {

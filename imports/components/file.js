@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import blobUtil from 'blob-util';
-import { callWithPromise } from '../helpers/loadFilePromise.js';
+import callWithPromise from '../helpers/loadFilePromise.js';
 import decrypt from '../helpers/decrypt.js';
 import Loading from './loading.js';
 
@@ -36,9 +36,9 @@ export default class File extends Component {
     window.URL.revokeObjectURL(this.state.blobURL);
   }
 
-  loadEachFileFromServ = async () => { // get a better understanding of this
+  loadEachFileFromServ = async () => {
     const file = this.props.fileData;
-    const base64EncodedFile = await callWithPromise('fileLoad', file.fileLocation); // returns a promise, await on promise
+    const base64EncodedFile = await callWithPromise('fileLoad', file.fileLocation);
     return base64EncodedFile;
   }
 
@@ -70,7 +70,7 @@ export default class File extends Component {
   renderFile = () => {
     if (this.state.decrypted) {
       return (
-        <img src={this.state.blobURL} />
+        <img src={this.state.blobURL} alt={this.state.fileData.fileName} />
       );
     }
     return (

@@ -19,7 +19,6 @@ class FileList extends Component {
   state = {
     passwordEntered: false,
     password: '',
-    passwordValid: false,
   };
 
   renderEachFile = () => this.props.files.map(file => (

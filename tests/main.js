@@ -18,3 +18,13 @@ describe('photo-share', function () {
     });
   }
 });
+
+
+// test cases from encrypt.js
+
+// const assertEncryptIsExecuted = (actual, expected, testName) => {
+//   if (actual === expected) {
+//     return ('this works');
+//   }
+//   return (`${testName}failed got ${actual} but expected ${expected}`);
+// };

@@ -2,14 +2,16 @@ import { Meteor } from 'meteor/meteor';
 import fse from 'fs-extra';
 import MongoFiles from '../imports/api/mongoFiles.js';
 
+/* eslint-disable meteor/audit-argument-checks */
+
 Meteor.startup(() => {
 });
 
 Meteor.methods({
   fileUpload(fileData, encryptedFile) {
     const dirLocation = `${process.env.PWD}/tmp`;
-    fileData.fullFileLocation = `${dirLocation}/${fileData.fileLocation}`; // use this endpoint for file loading
-    fse.outputFile(fileData.fullFileLocation, encryptedFile, { encoding: 'base64' }, function (err) {
+    const fullFileLocation = `${dirLocation}/${fileData.fileLocation}`; // use this endpoint for file loading
+    fse.outputFile(fullFileLocation, encryptedFile, { encoding: 'base64' }, function (err) {
       if (err) throw err;
     });
   },
