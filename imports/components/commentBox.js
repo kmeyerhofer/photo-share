@@ -16,8 +16,6 @@ class CommentBox extends Component {
   componentDidMount = () => {
     if ( MongoComments.findOne({_id: this.state.fileID}) === undefined) {
       this.createCommentObj();
-    } else {
-      // this.getComments();
     }
   }
 
@@ -38,7 +36,6 @@ class CommentBox extends Component {
         console.log(error);
       }
     });
-    // this.setState({comments: [...this.state.comments, commentData]});
   }
 
     render () {
