@@ -1,6 +1,12 @@
 import assert from 'assert';
-import './upload.tests.js';
+// import './upload.tests.js'; // Not yet implemented correctly
 import './passwordEncrypt.tests.js';
+import './passwordDecrypt.tests.js';
+import './error.tests.js';
+import './app.tests.js';
+import './loading.tests.js';
+import './cipher.tests.js';
+import './fileMoving.tests.js';
 
 describe('photo-share', function () {
   it('package.json has correct name', async function () {
@@ -20,13 +26,3 @@ describe('photo-share', function () {
     });
   }
 });
-
-
-// test cases from encrypt.js
-
-// const assertEncryptIsExecuted = (actual, expected, testName) => {
-//   if (actual === expected) {
-//     return ('this works');
-//   }
-//   return (`${testName}failed got ${actual} but expected ${expected}`);
-// };
