@@ -8,7 +8,7 @@ import addErrorTimer from '../helpers/addErrorTimer.js';
 import { connect } from 'react-redux';
 import { addError, removeError } from '../redux/actions/errorActions';
 import Loading from './loading.js';
-import {CommentBox} from './commentBox';
+import CommentBox from './commentBox';
 import {generateURL} from '../helpers/fileUtilities.js';
 
 

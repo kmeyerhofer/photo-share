@@ -8,10 +8,9 @@ export class CommentForm extends Component {
       var authorInput = ReactDOM.findDOMNode(this.refs.author);
       var commentInput = ReactDOM.findDOMNode(this.refs.comment);
 
-      var commentDataTuple = Object.freeze({author: authorInput.value, comment: commentInput.value});
+      var commentData = Object.freeze({author: authorInput.value, comment: commentInput.value});
 
-      console.log(commentDataTuple.author);
-      console.log(commentDataTuple.comment);
+      this.props.saveComment(commentData);
   }
 
   render() {

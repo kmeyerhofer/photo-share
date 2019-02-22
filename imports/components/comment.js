@@ -7,8 +7,8 @@ export class Comment extends Component {
     return(
       <div>
         <header>
-          <h3>Author:</h3>
-          <p>this is my comment hahahahaah</p>
+          <h3>{this.props.author}</h3>
+          <p>{this.props.comment}</p>
         </header>
       </div>
     );
