@@ -1,12 +1,12 @@
 import assert from 'assert';
 // import './upload.tests.js'; // Not yet implemented correctly
-import './passwordEncrypt.tests.js';
-import './passwordDecrypt.tests.js';
-import './error.tests.js';
-import './app.tests.js';
-import './loading.tests.js';
-import './cipher.tests.js';
-import './fileMoving.tests.js';
+import './unit/passwordEncrypt.tests.js';
+import './unit/passwordDecrypt.tests.js';
+import './unit/error.tests.js';
+import './unit/app.tests.js';
+import './unit/loading.tests.js';
+import './unit/cipher.tests.js';
+import './integration/fileMoving.tests.js';
 
 describe('photo-share', function () {
   it('package.json has correct name', async function () {

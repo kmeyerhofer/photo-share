@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { randomBytes, encode64 } from '../imports/helpers/fileUtilities.js';
-import decrypt from '../imports/helpers/decrypt.js';
-import encrypt from '../imports/helpers/encrypt.js';
+import { randomBytes, encode64 } from '../../imports/helpers/fileUtilities.js';
+import decrypt from '../../imports/helpers/decrypt.js';
+import encrypt from '../../imports/helpers/encrypt.js';
 
 if (Meteor.isServer) {
   describe('cipher testing', function () {

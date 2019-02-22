@@ -5,7 +5,7 @@
 // import { shallow, configure } from 'enzyme';
 // import { expect, assert } from 'chai';
 // import Adapter from 'enzyme-adapter-react-16';
-// import Upload from '../imports/components/upload.js';
+// import Upload from '../../imports/components/upload.js';
 
 // if (Meteor.isClient) {
 //   configure({ adapter: new Adapter() });
