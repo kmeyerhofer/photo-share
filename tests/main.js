@@ -1,4 +1,6 @@
 import assert from 'assert';
+import './upload.tests.js';
+import './passwordEncrypt.tests.js';
 
 describe('photo-share', function () {
   it('package.json has correct name', async function () {

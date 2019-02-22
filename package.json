@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test": "TEST_BROWSER_DRIVER=nightmare meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer",
     "lint": "eslint .",
@@ -18,7 +18,10 @@
     "extends": "@meteorjs/eslint-config-meteor",
     "root": true,
     "rules": {
-      "react/destructuring-assignment": ["enabled", "never"],
+      "react/destructuring-assignment": [
+        "enabled",
+        "never"
+      ],
       "react/prop-types": 0,
       "prefer-destructuring": 0,
       "no-loop-func": 0,
@@ -27,7 +30,9 @@
     },
     "overrides": [
       {
-        "files": ["tests/*"],
+        "files": [
+          "tests/*"
+        ],
         "rules": {
           "no-undef": 0
         }
@@ -36,14 +41,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
-    "chai": "^4.2.0",
-    "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.9.1",
-    "faker": "^4.1.0",
     "blob-util": "^2.0.2",
     "fs-extra": "^7.0.1",
     "history": "^4.7.2",
-    "meteor-node-stubs": "^0.4.1",
     "node-forge": "^0.7.6",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -64,12 +64,19 @@
   "devDependencies": {
     "@meteorjs/eslint-config-meteor": "^1.0.5",
     "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
     "eslint": "^5.12.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-import": "^2.15.0",
     "eslint-plugin-jsx-a11y": "^6.2.0",
     "eslint-plugin-meteor": "^5.1.0",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "faker": "^4.1.0",
+    "meteor-node-stubs": "^0.4.1",
+    "nightmare": "^3.0.1",
+    "sinon": "^7.2.4"
   }
 }
