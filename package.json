@@ -31,7 +31,9 @@
     "overrides": [
       {
         "files": [
-          "tests/*"
+          "tests/*",
+          "tests/unit/*",
+          "tests/integration/*"
         ],
         "rules": {
           "no-undef": 0
