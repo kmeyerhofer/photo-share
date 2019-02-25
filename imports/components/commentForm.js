@@ -18,7 +18,7 @@ export class CommentForm extends Component {
       <form onSubmit={this.handleFormSubmit}>
         <input type="text" ref="author" placeholder="enter your name (optional)" />
         <br/>
-        <input type="text" ref="comment" placeholder="comment..." />
+        <textarea ref="comment" placeholder='comment...'></textarea>
         <button type="submit">submit</button>
       </form>
     );

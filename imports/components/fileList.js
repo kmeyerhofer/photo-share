@@ -44,7 +44,7 @@ class FileList extends Component {
           </div>
         );
       }
-    ); // end of file map
+    );
   }
 
   handlePassword = (passwordObj) => {

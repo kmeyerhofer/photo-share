@@ -4,6 +4,7 @@ import {CommentForm} from './commentForm.js';
 import {Meteor} from 'meteor/meteor';
 import MongoComments from '../api/mongoComments.js';
 import { withTracker } from 'meteor/react-meteor-data';
+import checkComments from '../helpers/commentChecker.js';
 
 
 class CommentBox extends Component {
@@ -14,7 +15,7 @@ class CommentBox extends Component {
   }
 
   componentDidMount = () => {
-    if ( MongoComments.findOne({_id: this.state.fileID}) === undefined) {
+    if (checkComments(this.props.fileID)) {
       this.createCommentObj();
     }
   }
