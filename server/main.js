@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import fse from 'fs-extra';
 import MongoFiles from '../imports/api/mongoFiles.js';
+import MongoComments from '../imports/api/mongoComments.js';
 
 Meteor.startup(() => {
 });
@@ -25,11 +26,37 @@ Meteor.methods({
     const result = loadFile(fullFilePath, { encoding: 'base64' });
     return result;
   },
+
+  saveComments(id, comment) {
+    check(id, String);
+    check(comment, String);
+    if (MongoComments.findOne({_id: id}) === undefined) {
+      try {
+        MongoComments.insert({ _id: id, comments: [comment]});
+      } catch(err){
+        console.log(err);
+      }
+    } else {
+        try {
+          MongoComments.update({_id: id}, {$push: {comments: comment}});
+        } catch(err) {
+          console.log(err);
+        }
+    }
+  },
+
 });
 
 Meteor.publish('files', function(folderURL) {
   check(folderURL, String);
   return MongoFiles.find({
     url: `${folderURL}`,
+  });
+});
+
+Meteor.publish('comments', function(fileId) {
+  check(fileId, String);
+  return MongoComments.find({
+    _id: fileId,
   });
 });
