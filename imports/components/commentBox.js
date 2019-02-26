@@ -4,7 +4,6 @@ import {CommentForm} from './commentForm.js';
 import {Meteor} from 'meteor/meteor';
 import MongoComments from '../api/mongoComments.js';
 import { withTracker } from 'meteor/react-meteor-data';
-import checkComments from '../helpers/commentChecker.js';
 
 
 class CommentBox extends Component {
@@ -14,24 +13,7 @@ class CommentBox extends Component {
     loaded: false,
   }
 
-  componentDidMount = () => {
-    if (checkComments(this.props.fileID)) {
-      this.createCommentObj();
-    }
-  }
-
-  createCommentObj = () => {
-    Meteor.call('addComments', this.state.fileID, this.state.comments, (error, result) => {
-      if(error) {
-        console.log(error);
-      } else {
-        return;
-      }
-    });
-  }
-
   saveComment = (commentData) => {
-
     Meteor.call('saveComments', this.state.fileID, commentData, (error, result) => {
       if(error) {
         console.log(error);

@@ -24,26 +24,21 @@ Meteor.methods({
   },
 
   saveComments(id, comment) {
-    try {
-      MongoComments.update({_id: id}, {$push: {comments: comment}});
-    } catch(error) {
-      console.log(error);
-    }
-
-  },
-
-  addComments(id, comment) {  // done
-    if(MongoComments.findOne({_id: id}) === undefined){
+    if (MongoComments.findOne({_id: id}) === undefined) {
       try {
-        MongoComments.insert({ _id: id, comments: comment});
-      } catch (error) {
-        console.log(error);
+        MongoComments.insert({ _id: id, comments: [comment]});
+      } catch(err){
+        console.log(err);
       }
     } else {
-      return;
+        try {
+          MongoComments.update({_id: id}, {$push: {comments: comment}});
+        } catch(err) {
+          console.log(err);
+        }
     }
   },
-
+  
 });
 
 Meteor.publish('files', function(folderURL) {

@@ -12,6 +12,7 @@ export class CommentForm extends Component {
 
       this.props.saveComment(commentData);
   }
+  
 
   render() {
     return (

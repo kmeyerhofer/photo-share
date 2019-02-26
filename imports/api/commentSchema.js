@@ -7,7 +7,6 @@ const commentSchema = new SimpleSchema({
   },
   'comments.$' : {
     type: Object,
-    optional: true
   },
   'comments.$.author' : {
     type: String,
