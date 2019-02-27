@@ -64,6 +64,7 @@ class FileList extends Component {
     } if (!this.state.passwordEntered) {
       return (
         <div>
+          <h1>{this.props.url}</h1>
           <Password
             handlePassword={this.handlePassword}
             addErrorTimer={addErrorTimer}
@@ -79,14 +80,13 @@ class FileList extends Component {
   }
 }
 
-// subscriptions(redux and meteor)
-
-const fileListWithTracker = withTracker(() => {
-  const urlParam = window.location.pathname.slice(1);
+const fileListWithTracker = withTracker((location) => {
+  const urlParam = location.location.pathname.slice(1);
   const fileSub = Meteor.subscribe('files', urlParam);
   return {
     loading: fileSub.ready(),
     files: MongoFiles.find({}).fetch(),
+    url: urlParam,
   };
 })(FileList);
 
