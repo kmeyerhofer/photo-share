@@ -1,21 +1,21 @@
 import SimpleSchema from 'simpl-schema';
 
 const schema = new SimpleSchema({
-  'url': {
+  url: {
     type: String,
   },
-  'fileLocation': {
+  fileLocation: {
     type: String,
   },
-  'fileName': {
+  fileName: {
     type: String,
   },
-  'salt': {
+  salt: {
     type: String,
   },
-  'iv': {
+  iv: {
     type: String,
-  }
+  },
 });
 
 export default schema;

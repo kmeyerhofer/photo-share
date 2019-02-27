@@ -6,7 +6,9 @@ import { addError, removeError } from '../redux/actions/errorActions';
 import MongoFiles from '../api/mongoFiles.js';
 import encrypt from '../helpers/encrypt.js';
 import promise from '../helpers/promise.js';
-import { generateFileHash, randomBytes, generateURL, encode64 } from '../helpers/fileUtilities.js';
+import {
+  generateFileHash, randomBytes, generateURL, encode64,
+} from '../helpers/fileUtilities.js';
 import addErrorTimer from '../helpers/addErrorTimer.js';
 import Password from './passwordEncrypt.js';
 import Loading from './loading.js';
@@ -40,10 +42,10 @@ class Upload extends Component {
         fileName,
       };
       this.setState(
-        {statusMessage: `Encrypting file${files.length === 1 ? '' : 's'}...`}
+        { statusMessage: `Encrypting file${files.length === 1 ? '' : 's'}...` },
       );
       const encryptedFile = encrypt(files[i], this.state.password, this.state.salt, this.state.iv);
-      Meteor.call('fileUpload', fileData, encryptedFile, (error, result) => {
+      Meteor.call('fileUpload', fileData, encryptedFile, (error) => {
         if (error) {
           addErrorTimer(error.message);
         } else {
@@ -82,7 +84,8 @@ class Upload extends Component {
         {
           loading: true,
           statusMessage:
-            `Loading file${fileList.length === 1 ? '' : 's'}...`}
+            `Loading file${fileList.length === 1 ? '' : 's'}...`,
+        },
       );
       this.promiseFileLoader(fileList);
     } else if (fileList.length < 1) {
@@ -116,21 +119,17 @@ class Upload extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    errors: state.errorReducer,
-  };
-};
+const mapStateToProps = state => ({
+  errors: state.errorReducer,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addError: (error) => {
-      dispatch(addError(error));
-    },
-    removeError: (error) => {
-      dispatch(removeError(error));
-    },
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  addError: (error) => {
+    dispatch(addError(error));
+  },
+  removeError: (error) => {
+    dispatch(removeError(error));
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Upload);

@@ -5,7 +5,7 @@ export default function promise(file) {
       resolve(reader.result);
     };
     reader.onerror = () => {
-      reject('Error reading file');
+      reject(new Error('Error reading file'));
     };
     reader.readAsDataURL(file);
   });

@@ -9,5 +9,5 @@ export default function decrypt(base64EncryptedFile, password, encodedSalt, enco
   decipher.start({ iv });
   decipher.update(forge.util.createBuffer(decoded));
   decipher.finish();
-  return decipher.output.getBytes()
+  return decipher.output.getBytes();
 }

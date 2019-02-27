@@ -15,23 +15,21 @@ class ErrorContainer extends Component {
 
   renderEachError = (errors) => {
     if (errors) {
-      return errors.map((error) => {
-        return (
-          <Error
-            key={error.id}
-            message={error.message}
-            id={error.id}
-            removeSelf={this.removeSelf}
-          />
-        );
-      });
+      return errors.map(error => (
+        <Error
+          key={error.id}
+          message={error.message}
+          id={error.id}
+          removeSelf={this.removeSelf}
+        />
+      ));
     }
+    return null;
   }
 
   render() {
     return (
       <div>
-        {/* <h2>This is the Error Container component!</h2> */}
         <ul>
           {this.renderEachError(this.props.errors)}
         </ul>
@@ -41,18 +39,14 @@ class ErrorContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    errors: state.errors,
-  };
-};
+const mapStateToProps = state => ({
+  errors: state.errors,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    removeErrorById: (errorId) => {
-      dispatch(removeErrorById(errorId));
-    },
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  removeErrorById: (errorId) => {
+    dispatch(removeErrorById(errorId));
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ErrorContainer);

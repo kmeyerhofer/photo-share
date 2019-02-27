@@ -4,7 +4,6 @@ import ErrorContainer from './errorContainer.js';
 
 // React Components
 import Upload from './upload.js';
-import Folder from './folder.js';
 import FileList from './fileList.js';
 
 export default function App() {
@@ -14,7 +13,6 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={Upload} />
         <Route path="/:folderID" component={FileList} />
-        {/* <Route path="/:folderID" component={Folder} /> */}
       </Switch>
     </ErrorContainer>
   );

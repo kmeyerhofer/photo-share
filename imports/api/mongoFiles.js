@@ -4,7 +4,7 @@ import schema from './schema';
 const MongoFiles = new Mongo.Collection('files');
 
 MongoFiles.allow({
-  insert(userId, doc) {
+  insert() {
     return true;
   },
 });

@@ -20,3 +20,9 @@ insecure@1.0.7                # Allow all DB writes from clients (for prototypin
 static-html
 react-meteor-data
 aldeed:collection2@3.0.0
+meteortesting:mocha
+xolvio:cleaner
+dburles:factory
+hwillson:stub-collections
+check
+jquery

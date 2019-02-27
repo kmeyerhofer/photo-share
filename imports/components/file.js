@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import blobUtil from 'blob-util';
-import { callWithPromise } from '../helpers/loadFilePromise.js';
+import callWithPromise from '../helpers/loadFilePromise.js';
 import decrypt from '../helpers/decrypt.js';
 import Loading from './loading.js';
 
@@ -25,8 +25,7 @@ export default class File extends Component {
     } else if (!this.state.blobCreated) {
       try {
         this.createBlob();
-      }
-      catch(err) {
+      } catch (err) {
         this.props.imageCouldNotRender();
       }
     }
@@ -37,9 +36,9 @@ export default class File extends Component {
     window.URL.revokeObjectURL(this.state.blobURL);
   }
 
-  loadEachFileFromServ = async () => { // get a better understanding of this
+  loadEachFileFromServ = async () => {
     const file = this.props.fileData;
-    const base64EncodedFile = await callWithPromise('fileLoad', file.fileLocation); // returns a promise, await on promise
+    const base64EncodedFile = await callWithPromise('fileLoad', file.fileLocation);
     return base64EncodedFile;
   }
 
@@ -52,7 +51,7 @@ export default class File extends Component {
 
   decryptFile = () => {
     const file = this.props.fileData;
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       fileData: decrypt(prevState.fileData, this.props.password, file.salt, file.iv),
       decrypted: true,
     }));
@@ -71,13 +70,12 @@ export default class File extends Component {
   renderFile = () => {
     if (this.state.decrypted) {
       return (
-        <img src={this.state.blobURL} />
-      );
-    } else {
-      return(
-        <Loading message={'decrypting file'} />
+        <img src={this.state.blobURL} alt={this.state.fileData.fileName} />
       );
     }
+    return (
+      <Loading message="decrypting file" />
+    );
   }
 
   render() {
