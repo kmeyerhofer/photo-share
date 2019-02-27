@@ -5,16 +5,17 @@ const commentSchema = new SimpleSchema({
   comments: {
     type: Array,
   },
-  'comments.$': {
+  'comments.$' : {
     type: Object,
   },
-  'comments.$.author': {
+  'comments.$.author' : {
     type: String,
-    optional: true,
+    optional: true
   },
-  'comments.$.comment': {
+  'comments.$.comment' : {
     type: String,
   },
 });
+
 
 export default commentSchema;
