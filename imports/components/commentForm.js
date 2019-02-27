@@ -1,25 +1,26 @@
-import React, {Component} from 'react';
+/* eslint-disable react/no-find-dom-node, react/no-string-refs */
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-export class CommentForm extends Component {
 
+export default class CommentForm extends Component {
   handleFormSubmit = (event) => {
-      event.preventDefault();
+    event.preventDefault();
 
-      var authorInput = ReactDOM.findDOMNode(this.refs.author);
-      var commentInput = ReactDOM.findDOMNode(this.refs.comment);
+    const authorInput = ReactDOM.findDOMNode(this.refs.author);
+    const commentInput = ReactDOM.findDOMNode(this.refs.comment);
 
-      var commentData = Object.freeze({author: authorInput.value, comment: commentInput.value});
+    const commentData = Object.freeze({ author: authorInput.value, comment: commentInput.value });
 
-      this.props.saveComment(commentData);
+    this.props.saveComment(commentData);
   }
-  
+
 
   render() {
     return (
       <form onSubmit={this.handleFormSubmit}>
         <input type="text" ref="author" placeholder="enter your name (optional)" />
-        <br/>
-        <textarea ref="comment" placeholder='comment...'></textarea>
+        <br />
+        <textarea ref="comment" placeholder="comment..." />
         <button type="submit">submit</button>
       </form>
     );

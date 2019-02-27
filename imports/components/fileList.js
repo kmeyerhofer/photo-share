@@ -6,10 +6,10 @@ import MongoFiles from '../api/mongoFiles.js';
 import File from './file.js';
 import Password from './passwordDecrypt.js';
 import addErrorTimer from '../helpers/addErrorTimer.js';
-import { addError, removeError } from '../redux/actions/errorActions';
+import { addError, removeError } from '../redux/actions/errorActions.js';
 import Loading from './loading.js';
-import CommentBox from './commentBox';
-import {generateURL} from '../helpers/fileUtilities.js';
+import CommentBox from './commentBox.js';
+import { generateURL } from '../helpers/fileUtilities.js';
 
 
 class FileList extends Component {
@@ -23,27 +23,22 @@ class FileList extends Component {
     password: '',
   };
 
-  renderEachFile = () => {
-    return this.props.files.map((file , index) => {
-        return (
-        <div key={index}>
-          <File
-            key={generateURL()}
-            fileData={file}
-            password={this.state.password}
-            passwordEntered={this.state.passwordEntered}
-            imageCouldNotRender={this.imageCouldNotRender}
-            />
+  renderEachFile = () => this.props.files.map(file => (
+    <div key={generateURL()}>
+      <File
+        key={generateURL()}
+        fileData={file}
+        password={this.state.password}
+        passwordEntered={this.state.passwordEntered}
+        imageCouldNotRender={this.imageCouldNotRender}
+      />
 
-            <CommentBox
-              key={generateURL()}
-              id={file._id}
-            />
-          </div>
-        );
-      }
-    );
-  }
+      <CommentBox
+        key={generateURL()}
+        id={file._id}
+      />
+    </div>
+  ))
 
   handlePassword = (passwordObj) => {
     if (!passwordObj.passwordValid) {
@@ -85,7 +80,6 @@ class FileList extends Component {
 }
 
 // subscriptions(redux and meteor)
-
 
 const fileListWithTracker = withTracker(() => {
   const urlParam = window.location.pathname.slice(1);

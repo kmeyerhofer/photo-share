@@ -29,19 +29,19 @@ Meteor.methods({
 
   saveComments(id, comment) {
     check(id, String);
-    check(comment, String);
-    if (MongoComments.findOne({_id: id}) === undefined) {
+    check(comment, { author: String, comment: String });
+    if (MongoComments.findOne({ _id: id }) === undefined) {
       try {
-        MongoComments.insert({ _id: id, comments: [comment]});
-      } catch(err){
-        console.log(err);
+        MongoComments.insert({ _id: id, comments: [comment] });
+      } catch (err) {
+        throw err;
       }
     } else {
-        try {
-          MongoComments.update({_id: id}, {$push: {comments: comment}});
-        } catch(err) {
-          console.log(err);
-        }
+      try {
+        MongoComments.update({ _id: id }, { $push: { comments: comment } });
+      } catch (err) {
+        throw err;
+      }
     }
   },
 
