@@ -3,16 +3,16 @@ import { Route, Switch } from 'react-router-dom';
 import ErrorContainer from './errorContainer.js';
 
 // React Components
-import Upload from './upload.js';
-import FileList from './fileList.js';
+import HomeContainer from './homeContainer.js';
+import FileListContainer from './fileListContainer.js';
+
 
 export default function App() {
   return (
     <ErrorContainer>
-      <h1>hello this works</h1>
       <Switch>
-        <Route exact path="/" component={Upload} />
-        <Route path="/:folderID" component={FileList} />
+        <Route exact path="/" component={HomeContainer} />
+        <Route path="/:folderID" component={FileListContainer} />
       </Switch>
     </ErrorContainer>
   );
