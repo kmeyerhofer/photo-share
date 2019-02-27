@@ -1,0 +1,82 @@
+.home h1 {
+  margin: 15px;
+  font-size: 5rem;
+  text-align: center;
+  font-family: 'Furore', sans-serif;
+}
+
+.home .instructions-flexbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0;
+  padding: 15px 25px;
+  color: var(--instruction-text-primary);
+  border: 3px solid var(--border-primary);
+  background-color: var(--instruction-background);
+}
+
+.home .instruction {
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.home .upload-flexbox {
+  display: grid;
+  grid-row-gap: 35px;
+  grid-template-rows: auto auto;
+  grid-template-columns: 50% 50%;
+  grid-template-areas:
+    "files password"
+    "upload upload";
+}
+
+#files {
+  grid-area: files;
+  font-size: 1.25rem;
+}
+
+#pass {
+  grid-area: password;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+#pass,
+#files {
+  border: none;
+  margin: 0 50px;
+  padding: 10px;
+  height: 60px;
+  width: auto;
+  border-radius: 0;
+  background-color: var(--input-background);
+  color: var(--instruction-text-primary);
+  border: 3px solid var(--button-border);
+}
+
+.home button {
+  grid-area: upload;
+  justify-self: center;
+  font-size: 1.5rem;
+  width: 33%;
+  height: 65px;
+  border-radius: 0;
+  background-color: var(--input-background);
+  color: var(--instruction-text-primary);
+  border: 3px solid var(--button-border);
+  cursor: pointer;
+}
+
+.home button:hover,
+.home button:focus {
+  background-color: var(--button-hover);
+}
+
+#pass:hover,
+#pass:focus,
+#files:hover,
+#files:focus {
+  background-color: var(--button-hover);
+}

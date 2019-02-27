@@ -106,7 +106,7 @@ class Upload extends Component {
   render() {
     if (this.state.uploaded) return <Redirect to={this.state.url} />;
     return (
-      <form onSubmit={this.fileSubmitHandler}>
+      <form className="upload-flexbox" onSubmit={this.fileSubmitHandler}>
         <input type="file" id="files" multiple />
         <Password
           handlePassword={this.handlePassword}
