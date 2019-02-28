@@ -3,6 +3,7 @@ import blobUtil from 'blob-util';
 import callWithPromise from '../helpers/loadFilePromise.js';
 import decrypt from '../helpers/decrypt.js';
 import Loading from './loading.js';
+import Download from './download.js';
 
 export default class File extends Component {
   state = {
@@ -70,7 +71,10 @@ export default class File extends Component {
   renderFile = () => {
     if (this.state.decrypted) {
       return (
-        <img src={this.state.blobURL} alt={this.state.fileData.fileName} />
+        <div>
+          <img src={this.state.blobURL} alt={this.state.fileData.fileName} />
+          <Download blob={this.state.blobURL} base64={this.state.fileData} />
+        </div>
       );
     }
     return (
