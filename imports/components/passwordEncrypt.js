@@ -24,7 +24,7 @@ export default class Password extends Component {
 
   render() {
     return (
-      <input type="password" id="pass" placeholder="Enter Password" onChange={this.handlePassChange} />
+      <input type="password" id="passEncrypt" placeholder="Enter Password" onChange={this.handlePassChange} />
     );
   }
 }

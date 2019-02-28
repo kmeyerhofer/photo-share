@@ -10,4 +10,6 @@
   --button-primary: #d1e8e2;
   --button-border: #ffcb9a;
   --button-hover: #3c888c;
+  --error-background: #9b0000;
+  --error-border: #ff3939;
 }

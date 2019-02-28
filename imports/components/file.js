@@ -70,7 +70,7 @@ export default class File extends Component {
   renderFile = () => {
     if (this.state.decrypted) {
       return (
-        <img src={this.state.blobURL} alt={this.state.fileData.fileName} />
+        <img className="file" src={this.state.blobURL} alt={this.state.fileData.fileName} />
       );
     }
     return (

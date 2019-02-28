@@ -1,4 +1,10 @@
 h1 {
-  /*font-size: 60px;*/
+  margin: 15px;
+  font-size: 5rem;
+  text-align: center;
   color: var(--title-primary);
 }
+
+/*.loading {
+  width: 100%;
+}*/

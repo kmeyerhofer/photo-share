@@ -10,7 +10,7 @@ export default class CommentList extends Component {
   render() {
     if (this.props.comments && this.props.comments.length > 0) {
       return (
-        <div>
+        <div className="comment-flexbox">
           {this.commentsMap()}
         </div>
       );

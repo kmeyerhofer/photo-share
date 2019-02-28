@@ -1,12 +1,12 @@
-.home h1 {
-  font-family: 'Furore', sans-serif;
+.file-list-container {
+
 }
 
-.home .instructions-flexbox {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+.file-list-container h1 {
+  font-family: 'FiraCode', sans-serif;
+}
+
+.file-list-container h2 {
   margin: 35px 0;
   padding: 15px 25px;
   color: var(--instruction-text-primary);
@@ -14,50 +14,44 @@
   background-color: var(--instruction-background);
 }
 
-.home .instruction {
-  flex-shrink: 1;
-  flex-grow: 1;
-}
-
-.home .upload-grid {
+.file-list-grid {
   display: grid;
-  grid-row-gap: 35px;
   grid-template-rows: auto auto;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: auto;
   grid-template-areas:
-    "files password"
-    "upload upload";
+    "instruction"
+    "form";
 }
 
-#files {
-  grid-area: files;
-  font-size: 1.25rem;
+.file-list-instruction {
+  grid-area: instruction;
 }
 
-#passEncrypt {
-  grid-area: password;
-  font-size: 1.5rem;
+.file-list-form {
+  grid-area: form;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#passEncrypt,
-#files {
+.file-list-pass {
   border: none;
-  margin: 0 50px;
+  font-size: 1.5rem;
+  margin: 0 50px 35px 50px;
   padding: 10px;
   height: 60px;
-  width: auto;
+  width: 50%;
   border-radius: 0;
   background-color: var(--input-background);
   color: var(--instruction-text-primary);
   border: 3px solid var(--button-border);
 }
 
-.home button {
+.file-list-button {
   grid-area: upload;
-  justify-self: center;
   font-size: 1.5rem;
   width: 25%;
-  height: 65px;
+  height: 60px;
   border-radius: 0;
   background-color: var(--input-background);
   color: var(--instruction-text-primary);
@@ -65,14 +59,9 @@
   cursor: pointer;
 }
 
-.home button:hover,
-.home button:focus {
-  background-color: var(--button-hover);
-}
-
-#passEncrypt:hover,
-#passEncrypt:focus,
-#files:hover,
-#files:focus {
+.file-list-pass:hover,
+.file-list-pass:focus,
+.file-list-button:hover,
+.file-list-button:focus {
   background-color: var(--button-hover);
 }

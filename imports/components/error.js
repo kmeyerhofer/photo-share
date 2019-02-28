@@ -2,6 +2,9 @@ import React from 'react';
 
 export default function Error(props) {
   return (
-    <h3 onClick={() => props.removeSelf(props.id)}>{props.message}</h3>
+    <span
+      className="error"
+      onClick={() => props.removeSelf(props.id)}>{props.message}
+    </span>
   );
 }

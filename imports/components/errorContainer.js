@@ -30,9 +30,9 @@ class ErrorContainer extends Component {
   render() {
     return (
       <div>
-        <ul>
+        <div className="error-flexbox">
           {this.renderEachError(this.props.errors)}
-        </ul>
+        </div>
         {this.props.children}
       </div>
     );

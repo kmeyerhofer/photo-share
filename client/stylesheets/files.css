@@ -1,0 +1,87 @@
+.file-grid {
+  margin: 0 25px 35px 25px;
+  max-width: 2500px;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: var(--button-border);  
+  border: 2px solid var(--border-primary);
+  display: grid;
+  grid-column-gap: 15px;
+  grid-template-rows: 1fr;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "file comments-container";
+}
+
+.file {
+  grid-area: file;
+  place-self: center;
+  max-width: 100%;
+  width: 100%;
+}
+
+.comments-container {
+  grid-area: comments-container;
+  justify-self: center;
+  height: 100%;
+  display: grid;
+  grid-row-gap: 10px;
+  grid-template-rows: auto 110px;
+  grid-template-columns: 100%;
+  grid-template-areas:
+    "comment-flexbox"
+    "comment-form";
+}
+
+.comment-form {
+  grid-area: comment-form;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid black;
+}
+
+.comment-flexbox {
+  grid-area: comment-flexbox;
+  margin-bottom: 8px;
+  max-height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+}
+
+.comment {
+  background-color: var(--background-primary);
+  margin: 5px;
+  border: 2px solid black;
+  width: inherit;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+}
+
+#comment-name,
+#comment-text,
+#comment-submit {
+  border: 2px solid var(--button-border);
+  background-color: var(--input-background);
+  color: var(--instruction-text-primary);
+}
+
+#comment-name {
+  width: 200px;
+  padding: 5px;
+}
+
+#comment-text {
+  width: 200px;
+  resize: none;
+  padding: 5px;
+}
+
+#comment-submit {
+  width: 100px;
+  height: 35px;
+  cursor: pointer;
+}

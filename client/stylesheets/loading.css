@@ -35,7 +35,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   .sk-cube-grid .sk-cube {
     width: 33.33%;
     height: 33.33%;
-    background-color: #f0f;
+    background-color: var(--title-primary);
     float: left;
     -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
             animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; }
