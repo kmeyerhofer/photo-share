@@ -24,7 +24,7 @@ class CommentBox extends Component {
 
   render () {
     if (!this.props.loading) {
-      return <Loading message="Loading comments." />;
+      return <Loading message="Loading comments..." />;
     }
     return (
       <div className="comments-container">
