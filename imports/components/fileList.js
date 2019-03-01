@@ -59,12 +59,12 @@ class FileList extends Component {
   render() {
     if (!this.props.loading) {
       return (
-        <Loading message="loading files." />
+        <Loading message="Loading files..." />
       );
     } if (!this.state.passwordEntered) {
       return (
         <div className="file-list-grid">
-          <h2 className="file-list-instruction">Enter password to Decrypt</h2>
+          <h2 className="file-list-instruction">Enter the password below to decrypt the files sent to you</h2>
           <Password
             handlePassword={this.handlePassword}
             addErrorTimer={addErrorTimer}

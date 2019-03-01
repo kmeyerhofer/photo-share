@@ -33,8 +33,8 @@ export default class Password extends Component {
   render() {
     return (
       <form className="file-list-form" onSubmit={this.handleFormSubmit}>
-        <input className="file-list-pass" type="password" id="passDecrypt" placeholder="Enter Password" value={this.state.password} onChange={this.handlePassChange} />
-        <button className="file-list-button" type="submit">Submit</button>
+        <input className="file-list-pass" type="password" id="passDecrypt" placeholder="Enter decryption password" value={this.state.password} onChange={this.handlePassChange} />
+        <button className="file-list-button button" type="submit">Submit</button>
       </form>
     );
   }

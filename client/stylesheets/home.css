@@ -32,6 +32,7 @@
 #files {
   grid-area: files;
   font-size: 1.25rem;
+  cursor: pointer;
 }
 
 #passEncrypt {
@@ -58,26 +59,8 @@
   font-size: 1.5rem;
   width: 25%;
   height: 65px;
-  border-radius: 0;
-  background-color: var(--input-background);
-  color: var(--instruction-text-primary);
-  border: 3px solid var(--button-border);
-  cursor: pointer;
-}
-
-.home button:hover,
-.home button:focus {
-  background-color: var(--button-hover);
 }
 
 .home button:disabled {
-  background-color: grey;
   cursor: progress;
-}
-
-#passEncrypt:hover,
-#passEncrypt:focus,
-#files:hover,
-#files:focus {
-  background-color: var(--button-hover);
 }

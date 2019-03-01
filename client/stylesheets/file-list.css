@@ -1,7 +1,3 @@
-.file-list-container {
-
-}
-
 .file-list-container h1 {
   font-family: 'FiraCode', sans-serif;
 }
@@ -52,16 +48,4 @@
   font-size: 1.5rem;
   width: 25%;
   height: 60px;
-  border-radius: 0;
-  background-color: var(--input-background);
-  color: var(--instruction-text-primary);
-  border: 3px solid var(--button-border);
-  cursor: pointer;
-}
-
-.file-list-pass:hover,
-.file-list-pass:focus,
-.file-list-button:hover,
-.file-list-button:focus {
-  background-color: var(--button-hover);
 }

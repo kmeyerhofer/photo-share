@@ -112,7 +112,7 @@ class Upload extends Component {
           handlePassword={this.handlePassword}
           addErrorTimer={addErrorTimer}
         />
-        <button type="submit" disabled={this.state.loading}>Upload</button>
+        <button type="submit" className="button" disabled={this.state.loading}>Upload</button>
         {this.state.loading && <Loading message={this.state.statusMessage} />}
       </form>
     );

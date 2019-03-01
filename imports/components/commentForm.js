@@ -19,7 +19,7 @@ export default class CommentForm extends Component {
       <form className="comment-form" onSubmit={this.handleFormSubmit}>
         <input id="comment-name" type="text" placeholder="Name (optional)" onChange={(evt) => { this.setState({ author: evt.target.value }); }} />
         <textarea id="comment-text" placeholder="Comment..." onChange={(evt) => { this.setState({ comment: evt.target.value }); }} />
-        <button id="comment-submit" type="submit">Submit</button>
+        <button id="comment-submit" className="button" type="submit">Submit</button>
       </form>
     );
   }
