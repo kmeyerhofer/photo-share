@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addError, removeError } from '../redux/actions/errorActions';
+import { resetCommentLoad } from '../redux/actions/commentActions';
 import MongoFiles from '../api/mongoFiles.js';
 import encrypt from '../helpers/encrypt.js';
 import promise from '../helpers/promise.js';
@@ -104,6 +105,7 @@ class Upload extends Component {
   }
 
   render() {
+    this.props.resetCommentLoad();
     if (this.state.uploaded) return <Redirect to={this.state.url} />;
     return (
       <form className="upload-grid" onSubmit={this.fileSubmitHandler}>
@@ -129,6 +131,9 @@ const mapDispatchToProps = dispatch => ({
   },
   removeError: (error) => {
     dispatch(removeError(error));
+  },
+  resetCommentLoad: () => {
+    dispatch(resetCommentLoad());
   },
 });
 

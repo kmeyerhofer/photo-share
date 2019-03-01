@@ -40,7 +40,7 @@ class ErrorContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.errors,
+  errors: state.errorReducer.errors,
 });
 
 const mapDispatchToProps = dispatch => ({
