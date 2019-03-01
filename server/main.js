@@ -11,7 +11,7 @@ Meteor.methods({
   fileUpload(fileData, encryptedFile) {
     check(fileData, { url: String, fileLocation: String, fileName: String });
     check(encryptedFile, String);
-    const dirLocation = `${process.env.PWD}/tmp`;
+    const dirLocation = `${process.env.PHOTO_SHARE_DIR}`;
     const fullFileLocation = `${dirLocation}/${fileData.fileLocation}`; // use this endpoint for file loading
     fse.outputFile(fullFileLocation, encryptedFile, { encoding: 'base64' }, function (err) {
       if (err) throw err;
@@ -20,7 +20,7 @@ Meteor.methods({
 
   fileLoad(fullFileLoc) {
     check(fullFileLoc, String);
-    const dirLocation = `${process.env.PWD}/tmp`;
+    const dirLocation = `${process.env.PHOTO_SHARE_DIR}`;
     const fullFilePath = `${dirLocation}/${fullFileLoc}`;
     const loadFile = Meteor.wrapAsync(fse.readFile);
     const result = loadFile(fullFilePath, { encoding: 'base64' });
