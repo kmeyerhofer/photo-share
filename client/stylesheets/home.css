@@ -70,6 +70,11 @@
   background-color: var(--button-hover);
 }
 
+.home button:disabled {
+  background-color: grey;
+  cursor: progress;
+}
+
 #passEncrypt:hover,
 #passEncrypt:focus,
 #files:hover,

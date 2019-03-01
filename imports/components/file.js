@@ -74,7 +74,7 @@ export default class File extends Component {
       );
     }
     return (
-      <Loading message="decrypting file" />
+      <Loading message="Decrypting file..." />
     );
   }
 
