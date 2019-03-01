@@ -3,7 +3,7 @@ import assert from 'assert';
 import './unit/passwordEncrypt.tests.js';
 import './unit/passwordDecrypt.tests.js';
 import './unit/error.tests.js';
-import './unit/app.tests.js';
+// import './unit/app.tests.js'; // No elements to test in app
 import './unit/loading.tests.js';
 import './unit/cipher.tests.js';
 import './integration/fileMoving.tests.js';
