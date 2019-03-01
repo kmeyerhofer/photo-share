@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import MongoFiles from '../api/mongoFiles.js';
 import File from './file.js';
 import Password from './passwordDecrypt.js';
@@ -10,7 +11,6 @@ import { addError, removeError } from '../redux/actions/errorActions.js';
 import Loading from './loading.js';
 import CommentBox from './commentBox.js';
 import { generateURL } from '../helpers/fileUtilities.js';
-
 
 class FileList extends Component {
   constructor(props) {
@@ -23,22 +23,28 @@ class FileList extends Component {
     password: '',
   };
 
-  renderEachFile = () => this.props.files.map(file => (
-    <div className="file-grid" key={generateURL()}>
-      <File
-        key={generateURL()}
-        fileData={file}
-        password={this.state.password}
-        passwordEntered={this.state.passwordEntered}
-        imageCouldNotRender={this.imageCouldNotRender}
-      />
+  renderEachFile = () => {
+    if (this.props.files.length === 0) {
+      addErrorTimer('No files exist at the URL visited.');
+      return <Redirect to="/" />;
+    }
+    return this.props.files.map(file => (
+      <div className="file-grid" key={generateURL()}>
+        <File
+          key={generateURL()}
+          fileData={file}
+          password={this.state.password}
+          passwordEntered={this.state.passwordEntered}
+          imageCouldNotRender={this.imageCouldNotRender}
+        />
 
-      <CommentBox
-        key={generateURL()}
-        id={file._id}
-      />
-    </div>
-  ))
+        <CommentBox
+          key={generateURL()}
+          id={file._id}
+        />
+      </div>
+    ));
+  }
 
   handlePassword = (passwordObj) => {
     if (!passwordObj.passwordValid) {
