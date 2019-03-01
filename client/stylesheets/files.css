@@ -13,6 +13,7 @@
   grid-template-columns: auto minmax(225px, auto);
   grid-template-areas:
     "file comments-container";
+  align-items: center;
 }
 
 .file {
@@ -26,6 +27,7 @@
 .comments-container {
   grid-area: comments-container;
   justify-self: stretch;
+  height: 100%;
   position: relative;
   display: grid;
   grid-template-rows: auto 150px;
@@ -51,11 +53,13 @@
   justify-items: flex-end;
 }
 
-.comment {
+.comment-container {
   background-color: var(--background-primary);
   border: 2px solid black;
   overflow-wrap: break-word;
   box-sizing: border-box;
+  margin: 5px 0;
+  padding: 2px;
 }
 
 .comment-form {
