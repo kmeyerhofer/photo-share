@@ -1,0 +1,51 @@
+.file-list-container h1 {
+  font-family: 'FiraCode', sans-serif;
+}
+
+.file-list-container h2 {
+  margin: 35px 0;
+  padding: 15px 25px;
+  color: var(--instruction-text-primary);
+  border: 3px solid var(--border-primary);
+  background-color: var(--instruction-background);
+}
+
+.file-list-grid {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto;
+  grid-template-areas:
+    "instruction"
+    "form";
+}
+
+.file-list-instruction {
+  grid-area: instruction;
+}
+
+.file-list-form {
+  grid-area: form;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.file-list-pass {
+  border: none;
+  font-size: 1.5rem;
+  margin: 0 50px 35px 50px;
+  padding: 10px;
+  height: 60px;
+  width: 50%;
+  border-radius: 0;
+  background-color: var(--input-background);
+  color: var(--instruction-text-primary);
+  border: 3px solid var(--button-border);
+}
+
+.file-list-button {
+  grid-area: upload;
+  font-size: 1.5rem;
+  width: 25%;
+  height: 60px;
+}

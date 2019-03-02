@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'FiraCode';
+    src: url('/font/FiraCode-Regular-webfont.woff') format('woff'),
+         url('/font/FiraCode-Regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Furore';
+    src: url('/font/Furore-webfont.woff') format('woff'),
+         url('/font/Furore-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

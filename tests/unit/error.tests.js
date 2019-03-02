@@ -14,7 +14,7 @@ if (Meteor.isClient) {
       message: 'This is a testing error message.',
       removeSelf: () => 'a function',
     };
-    it('should have message text within h3', () => {
+    it('should have message text within a span', () => {
       const wrapper = shallow(
         <Error
           key={error.id}
@@ -23,7 +23,7 @@ if (Meteor.isClient) {
           removeSelf={error.removeSelf}
         />,
       );
-      expect(wrapper.find('h3').text()).to.equal(error.message);
+      expect(wrapper.find('span').text()).to.equal(error.message);
     });
 
     it('should have an onClick function', () => {
@@ -35,7 +35,7 @@ if (Meteor.isClient) {
           removeSelf={error.removeSelf}
         />,
       );
-      expect(wrapper.find('h3').prop('onClick')).to.be.an.instanceof(Function);
+      expect(wrapper.find('span').prop('onClick')).to.be.an.instanceof(Function);
     });
   });
 }

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Loading(props) {
   return (
-    <div>
+    <div className="loading">
       {props.message}
       <div className="sk-cube-grid">
         <div className="sk-cube sk-cube1" />

@@ -1,0 +1,16 @@
+.button {
+  border-radius: 0;
+  background-color: var(--input-background);
+  color: var(--instruction-text-primary);
+  border: 3px solid var(--button-border);
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: var(--button-hover);
+}
+
+.button:disabled {
+  background-color: var(--button-disabled);
+}

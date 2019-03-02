@@ -1,0 +1,18 @@
+:root {
+  --background-primary: #2c3531;
+  --background-secondary: #000;
+  --title-primary: #04C284;
+  --text-primary: #116466;
+  --instruction-background: #22767a;
+  --instruction-text-primary: #d1e8e2;
+  --input-background: #034e51;
+  --border-primary: #d9b08c;
+  --button-primary: #d1e8e2;
+  --button-border: #ffcb9a;
+  --button-hover: #3c888c;
+  --button-disabled: grey;
+  --error-background: #9b0000;
+  --error-border: #ff3939;
+  --file-background-primary: #ffcb9a;
+  --file-background-secondary: #e9af78;
+}

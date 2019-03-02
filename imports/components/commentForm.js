@@ -1,34 +1,25 @@
-/* eslint-disable react/no-find-dom-node, react/no-string-refs */
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 export default class CommentForm extends Component {
-
   state = {
-    author: "",
-    comment: "",
+    author: '',
+    comment: '',
   };
-
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-
     const authorInput = this.state.author;
     const commentInput = this.state.comment;
-
     const commentData = Object.freeze({ author: authorInput, comment: commentInput });
-
     this.props.saveComment(commentData);
   }
 
-
   render() {
     return (
-      <form onSubmit={this.handleFormSubmit}>
-        <input type="text" ref="author" placeholder="enter your name (optional)" onChange={ (evt) => {this.setState({author: evt.target.value});}} />
-        <br />
-        <textarea ref="comment" placeholder="comment..." onChange={ (evt) => {this.setState({comment: evt.target.value});}} />
-        <button type="submit">submit</button>
+      <form className="comment-form" onSubmit={this.handleFormSubmit}>
+        <input id="comment-name" type="text" placeholder="Name (optional)" onChange={(evt) => { this.setState({ author: evt.target.value }); }} />
+        <textarea id="comment-text" placeholder="Comment..." onChange={(evt) => { this.setState({ comment: evt.target.value }); }} />
+        <button id="comment-submit" className="button" type="submit">Submit</button>
       </form>
     );
   }

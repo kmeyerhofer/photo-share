@@ -7,9 +7,14 @@ import CommentForm from './commentForm.js';
 import MongoComments from '../api/mongoComments.js';
 import { addError, removeError } from '../redux/actions/errorActions.js';
 import addErrorTimer from '../helpers/addErrorTimer.js';
-
+import Loading from './loading.js';
 
 class CommentBox extends Component {
+  constructor(props) {
+    super(props);
+    addErrorTimer = addErrorTimer.bind(this);
+  }
+
   state = {
     fileID: this.props.id,
   }
@@ -17,17 +22,17 @@ class CommentBox extends Component {
   saveComment = (commentData) => {
     Meteor.call('saveComments', this.state.fileID, commentData, (error) => {
       if (error) {
-        addErrorTimer(error.message);
+        addErrorTimer(error.error);
       }
     });
   }
 
   render () {
-    if (!this.props.loading) {
-      return <h3>loading comments</h3>;
+    if (!this.props.loading || !this.props.loadComments) {
+      return <Loading message="Loading comments..." />;
     }
     return (
-      <div>
+      <div className="comments-container">
         <CommentList comments={this.props.comments} />
         <CommentForm saveComment={this.saveComment} />
       </div>
@@ -43,6 +48,10 @@ const commentTracker = withTracker(({ id }) => {
   };
 })(CommentBox);
 
+const mapStateToProps = state => ({
+  loadComments: state.commentReducer.loadComments,
+});
+
 const mapDispatchToProps = dispatch => ({
   addError: (error) => {
     dispatch(addError(error));
@@ -52,4 +61,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(commentTracker);
+export default connect(mapStateToProps, mapDispatchToProps)(commentTracker);

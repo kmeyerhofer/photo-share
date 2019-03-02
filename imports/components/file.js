@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import blobUtil from 'blob-util';
+import { connect } from 'react-redux';
+import { commentLoad } from '../redux/actions/commentActions.js';
 import callWithPromise from '../helpers/loadFilePromise.js';
 import decrypt from '../helpers/decrypt.js';
 import Loading from './loading.js';
 import Download from './download.js';
 
-export default class File extends Component {
+class File extends Component {
   state = {
     fileData: '',
     loaded: false,
@@ -29,6 +31,8 @@ export default class File extends Component {
       } catch (err) {
         this.props.imageCouldNotRender();
       }
+    } else if (this.state.blobCreated) {
+      this.props.loadComments();
     }
   }
 
@@ -72,13 +76,13 @@ export default class File extends Component {
     if (this.state.decrypted) {
       return (
         <div>
-          <img src={this.state.blobURL} alt={this.state.fileData.fileName} />
+          <img className="file" src={this.state.blobURL} alt={this.state.fileData.fileName} />
           <Download blob={this.state.blobURL} base64={this.state.fileData} />
         </div>
       );
     }
     return (
-      <Loading message="decrypting file" />
+      <Loading message="Decrypting file..." />
     );
   }
 
@@ -86,3 +90,11 @@ export default class File extends Component {
     return this.renderFile();
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  loadComments: () => {
+    dispatch(commentLoad());
+  },
+});
+
+export default connect(null, mapDispatchToProps)(File);

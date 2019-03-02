@@ -32,12 +32,10 @@ export default class Password extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleFormSubmit}>
-          <input type="password" id="pass" placeholder="Password" value={this.state.password} onChange={this.handlePassChange} />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+      <form className="file-list-form" onSubmit={this.handleFormSubmit}>
+        <input className="file-list-pass" type="password" id="passDecrypt" placeholder="Enter decryption password" value={this.state.password} onChange={this.handlePassChange} />
+        <button className="file-list-button button" type="submit">Submit</button>
+      </form>
     );
   }
 }

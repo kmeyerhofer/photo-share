@@ -30,9 +30,9 @@ class ErrorContainer extends Component {
   render() {
     return (
       <div>
-        <ul>
+        <div className="error-flexbox">
           {this.renderEachError(this.props.errors)}
-        </ul>
+        </div>
         {this.props.children}
       </div>
     );
@@ -40,7 +40,7 @@ class ErrorContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.errors,
+  errors: state.errorReducer.errors,
 });
 
 const mapDispatchToProps = dispatch => ({
