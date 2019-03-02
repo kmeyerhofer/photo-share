@@ -106,13 +106,13 @@ class Upload extends Component {
   render() {
     if (this.state.uploaded) return <Redirect to={this.state.url} />;
     return (
-      <form onSubmit={this.fileSubmitHandler}>
+      <form className="upload-grid" onSubmit={this.fileSubmitHandler}>
         <input type="file" id="files" multiple />
         <Password
           handlePassword={this.handlePassword}
           addErrorTimer={addErrorTimer}
         />
-        <button type="submit" disabled={this.state.loading}>Upload</button>
+        <button type="submit" className="button" disabled={this.state.loading}>Upload</button>
         {this.state.loading && <Loading message={this.state.statusMessage} />}
       </form>
     );

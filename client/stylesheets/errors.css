@@ -1,0 +1,17 @@
+.error-flexbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.error {
+  background-color: var(--error-background);
+  color: var(--instruction-text-primary);
+  padding: 10px;
+  border: 3px solid var(-error-border);
+  margin: 5px;
+}

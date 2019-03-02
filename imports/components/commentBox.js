@@ -7,7 +7,7 @@ import CommentForm from './commentForm.js';
 import MongoComments from '../api/mongoComments.js';
 import { addError, removeError } from '../redux/actions/errorActions.js';
 import addErrorTimer from '../helpers/addErrorTimer.js';
-
+import Loading from './loading.js';
 
 class CommentBox extends Component {
   state = {
@@ -24,10 +24,10 @@ class CommentBox extends Component {
 
   render () {
     if (!this.props.loading) {
-      return <h3>loading comments</h3>;
+      return <Loading message="Loading comments..." />;
     }
     return (
-      <div>
+      <div className="comments-container">
         <CommentList comments={this.props.comments} />
         <CommentForm saveComment={this.saveComment} />
       </div>

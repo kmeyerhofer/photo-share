@@ -1,0 +1,7 @@
+body {
+  font-size: 20px;
+  padding: 25px;
+  font-family: 'FiraCode', sans-serif;
+  color: var(--text-primary);
+  background: linear-gradient(to bottom, var(--background-primary) 50%, var(--background-secondary)) fixed;
+}

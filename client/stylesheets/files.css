@@ -1,0 +1,125 @@
+.file-grid {
+  margin: 0 25px 35px 25px;
+  min-width: min-content;
+  min-height: 500px;
+  height: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, var(--file-background-primary) 50%, var(--file-background-secondary));
+  display: grid;
+  grid-column-gap: 15px;
+  grid-template-rows: auto;
+  grid-template-columns: auto minmax(225px, auto);
+  grid-template-areas:
+    "file comments-container";
+  align-items: center;
+}
+
+.file {
+  grid-area: file;
+  place-self: center;
+  min-width: 250px;
+  max-width: 100%;
+  height: auto;
+}
+
+.comments-container {
+  grid-area: comments-container;
+  justify-self: stretch;
+  height: 100%;
+  position: relative;
+  background-color: var(--file-background-secondary);
+  display: grid;
+  grid-template-rows: auto 150px;
+  grid-template-columns: auto;
+  grid-template-areas:
+    "comment-flexbox"
+    "comment-form";
+}
+
+.comment-flexbox {
+  grid-area: comment-flexbox;
+  justify-self: stretch;
+  box-sizing: border-box;
+  align-self: end;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-end;
+}
+
+.comment-container {
+  background-color: var(--background-primary);
+  border: 2px solid var(--instruction-text-primary);
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  margin-top: 5px;
+  padding: 6px 3px;
+}
+
+.comment-container:first-child {
+  margin-top: 0;
+}
+
+.comment-container:hover {
+  background-color: var(--background-secondary);
+}
+
+.comment-author {
+  color: var(--title-primary);
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.comment-text {
+  color: var(--instruction-text-primary);
+  font-size: 1rem;
+}
+
+.comment-form {
+  grid-area: comment-form;
+  align-self: end;
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#comment-name,
+#comment-text {
+  font-size: .8rem;
+  border: 2px solid var(--button-border);
+  background-color: var(--input-background);
+  color: var(--instruction-text-primary);
+  box-sizing: border-box;
+}
+
+#comment-name,
+#comment-text {
+  width: 100%;
+  padding: 5px;
+  border-radius: 0;
+}
+
+#comment-name {
+  height: 35px;
+}
+
+#comment-text {
+  height: 60px;
+  resize: none;
+}
+
+#comment-submit {
+  width: 100px;
+  height: 35px;
+  font-size: .8rem;
+  border: 2px solid var(--button-border);
+}

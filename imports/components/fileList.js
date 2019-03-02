@@ -24,7 +24,7 @@ class FileList extends Component {
   };
 
   renderEachFile = () => this.props.files.map(file => (
-    <div key={generateURL()}>
+    <div className="file-grid" key={generateURL()}>
       <File
         key={generateURL()}
         fileData={file}
@@ -52,18 +52,19 @@ class FileList extends Component {
   }
 
   imageCouldNotRender = () => {
-    addErrorTimer('password is not correct');
+    addErrorTimer('Password is not correct.');
     this.setState({ passwordEntered: false });
   }
 
   render() {
     if (!this.props.loading) {
       return (
-        <Loading message="loading files" />
+        <Loading message="Loading files..." />
       );
     } if (!this.state.passwordEntered) {
       return (
-        <div>
+        <div className="file-list-grid">
+          <h2 className="file-list-instruction">Enter the password below to decrypt the files sent to you</h2>
           <Password
             handlePassword={this.handlePassword}
             addErrorTimer={addErrorTimer}
@@ -79,10 +80,8 @@ class FileList extends Component {
   }
 }
 
-// subscriptions(redux and meteor)
-
-const fileListWithTracker = withTracker(() => {
-  const urlParam = window.location.pathname.slice(1);
+const fileListWithTracker = withTracker((location) => {
+  const urlParam = location.location;
   const fileSub = Meteor.subscribe('files', urlParam);
   return {
     loading: fileSub.ready(),
