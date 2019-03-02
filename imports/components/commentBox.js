@@ -10,6 +10,11 @@ import addErrorTimer from '../helpers/addErrorTimer.js';
 import Loading from './loading.js';
 
 class CommentBox extends Component {
+  constructor(props) {
+    super(props);
+    addErrorTimer = addErrorTimer.bind(this);
+  }
+
   state = {
     fileID: this.props.id,
   }
@@ -17,7 +22,7 @@ class CommentBox extends Component {
   saveComment = (commentData) => {
     Meteor.call('saveComments', this.state.fileID, commentData, (error) => {
       if (error) {
-        addErrorTimer(error.message);
+        addErrorTimer(error.error);
       }
     });
   }
