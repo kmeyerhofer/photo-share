@@ -23,7 +23,7 @@ class CommentBox extends Component {
   }
 
   render () {
-    if (!this.props.loading) {
+    if (!this.props.loading || !this.props.loadComments) {
       return <Loading message="Loading comments..." />;
     }
     return (
@@ -43,6 +43,10 @@ const commentTracker = withTracker(({ id }) => {
   };
 })(CommentBox);
 
+const mapStateToProps = state => ({
+  loadComments: state.commentReducer.loadComments,
+});
+
 const mapDispatchToProps = dispatch => ({
   addError: (error) => {
     dispatch(addError(error));
@@ -52,4 +56,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(commentTracker);
+export default connect(mapStateToProps, mapDispatchToProps)(commentTracker);
