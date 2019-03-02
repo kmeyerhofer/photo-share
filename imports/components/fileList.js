@@ -95,9 +95,6 @@ const fileListWithTracker = withTracker((location) => {
   };
 })(FileList);
 
-const mapStateToProps = state => ({
-  errors: state.errorReducer,
-});
 
 const mapDispatchToProps = dispatch => ({
   addError: (error) => {
@@ -108,4 +105,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(fileListWithTracker);
+export default connect(null, mapDispatchToProps)(fileListWithTracker);

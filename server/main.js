@@ -30,7 +30,9 @@ Meteor.methods({
   saveComments(id, comment) {
     check(id, String);
     check(comment, { author: String, comment: String });
-    if (MongoComments.findOne({ _id: id }) === undefined) {
+    if (comment.author.length === 0 && comment.comment.length === 0) {
+      throw new Meteor.Error('Name and comment can\'t be blank.');
+    } else if (MongoComments.findOne({ _id: id }) === undefined) {
       try {
         MongoComments.insert({ _id: id, comments: [comment] });
       } catch (err) {
