@@ -9,9 +9,6 @@ export default class CommentForm extends Component {
     comment: "",
   };
 
-  // updateAuthor = (event) => {
-  //   this.setState({author:event.targe})
-  // }
 
   handleFormSubmit = (event) => {
     event.preventDefault();
