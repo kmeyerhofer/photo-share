@@ -115,7 +115,11 @@ class Upload extends Component {
           addErrorTimer={addErrorTimer}
         />
         <button type="submit" className="button" disabled={this.state.loading}>Upload</button>
-        {this.state.loading && <Loading message={this.state.statusMessage} />}
+        {this.state.loading && (
+        <div className="upload-loading">
+          <Loading message={this.state.statusMessage} />
+        </div>
+        )}
       </form>
     );
   }

@@ -65,7 +65,9 @@ class FileList extends Component {
   render() {
     if (!this.props.loading) {
       return (
-        <Loading message="Loading files..." />
+        <div className="file-list-loading">
+          <Loading message="Downloading files..." />
+        </div>
       );
     } if (!this.state.passwordEntered) {
       return (
