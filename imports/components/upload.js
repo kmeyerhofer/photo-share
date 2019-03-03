@@ -76,6 +76,30 @@ class Upload extends Component {
     });
   }
 
+  fileTypeInvalid = fileType => !fileType.match(/image\/(gif|jpeg|jpg|png|bmp)/i)
+
+  fileSizeInvalid = fileSize => fileSize >= 5000000 // 5 MB
+
+  filesInvalid = (fileList) => {
+    const self = this;
+    return Array.from(fileList).some(function(file) {
+      const invalidType = self.fileTypeInvalid(file.type);
+      const invalidSize = self.fileSizeInvalid(file.size);
+      let errorMessage = '';
+      if (invalidType && invalidSize) {
+        errorMessage = `The file ${file.name} is not an accepted file type and is larger than 5MB.`;
+        addErrorTimer(errorMessage);
+      } else if (invalidType) {
+        errorMessage = `The file ${file.name} is not an accepted file type.`;
+        addErrorTimer(errorMessage);
+      } else if (invalidSize) {
+        errorMessage = `The file ${file.name} is larger than 5MB.`;
+        addErrorTimer(errorMessage);
+      }
+      return invalidType || invalidSize;
+    });
+  }
+
   fileSubmitHandler = (event) => {
     event.preventDefault();
     const fileList = document.querySelector('#files').files;
@@ -91,6 +115,8 @@ class Upload extends Component {
       this.promiseFileLoader(fileList);
     } else if (fileList.length < 1) {
       addErrorTimer('You must select a file.');
+    } else if (this.filesInvalid(fileList)) {
+      // If the files in the list are valid
     } else if (!this.state.passwordValidated) {
       addErrorTimer(this.state.passwordError);
     }
