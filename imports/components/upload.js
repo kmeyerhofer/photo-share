@@ -13,6 +13,7 @@ import {
 import addErrorTimer from '../helpers/addErrorTimer.js';
 import Password from './passwordEncrypt.js';
 import Loading from './loading.js';
+import FileLimitInstructions from './fileLimitInstructions.js';
 
 class Upload extends Component {
   constructor (props) {
@@ -87,13 +88,13 @@ class Upload extends Component {
       const invalidSize = self.fileSizeInvalid(file.size);
       let errorMessage = '';
       if (invalidType && invalidSize) {
-        errorMessage = `The file ${file.name} is not an accepted file type and is larger than 5MB.`;
+        errorMessage = `${file.name} is an invalid file type of ${file.type} and is larger than 5 MB.`;
         addErrorTimer(errorMessage);
       } else if (invalidType) {
-        errorMessage = `The file ${file.name} is not an accepted file type.`;
+        errorMessage = `${file.name} has an invalid file type of ${file.type}.`;
         addErrorTimer(errorMessage);
       } else if (invalidSize) {
-        errorMessage = `The file ${file.name} is larger than 5MB.`;
+        errorMessage = `${file.name} is larger than 5MB.`;
         addErrorTimer(errorMessage);
       }
       return invalidType || invalidSize;
@@ -135,7 +136,10 @@ class Upload extends Component {
     if (this.state.uploaded) return <Redirect to={this.state.url} />;
     return (
       <form className="upload-grid" onSubmit={this.fileSubmitHandler}>
-        <input type="file" id="files" multiple />
+        <div className="file-select-container">
+          <input type="file" id="files" multiple />
+          <FileLimitInstructions />
+        </div>
         <Password
           handlePassword={this.handlePassword}
           addErrorTimer={addErrorTimer}
