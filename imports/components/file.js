@@ -5,6 +5,7 @@ import { commentLoad } from '../redux/actions/commentActions.js';
 import callWithPromise from '../helpers/loadFilePromise.js';
 import decrypt from '../helpers/decrypt.js';
 import Loading from './loading.js';
+import Download from './download.js';
 
 class File extends Component {
   state = {
@@ -74,7 +75,10 @@ class File extends Component {
   renderFile = () => {
     if (this.state.decrypted) {
       return (
-        <img className="file" src={this.state.blobURL} alt={this.state.fileData.fileName} />
+        <div>
+          <img className="file" src={this.state.blobURL} alt={this.state.fileData.fileName} />
+          <Download blob={this.state.blobURL} base64={this.state.fileData} />
+        </div>
       );
     }
     return (
