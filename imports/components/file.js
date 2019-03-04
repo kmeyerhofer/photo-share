@@ -77,7 +77,9 @@ class File extends Component {
       return (
         <div className="file-container">
           <img className="file" src={this.state.blobURL} alt={this.state.fileData.fileName} />
-          <Download blob={this.state.blobURL} base64={this.state.fileData} />
+          {this.state.blobCreated && (
+            <Download blob={this.state.blobURL} base64={this.state.fileData} />
+          )}
         </div>
       );
     }
