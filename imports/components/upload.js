@@ -13,6 +13,7 @@ import {
 import addErrorTimer from '../helpers/addErrorTimer.js';
 import Password from './passwordEncrypt.js';
 import Loading from './loading.js';
+import FileLimitInstructions from './fileLimitInstructions.js';
 
 class Upload extends Component {
   constructor (props) {
@@ -76,6 +77,30 @@ class Upload extends Component {
     });
   }
 
+  fileTypeInvalid = fileType => !fileType.match(/image\/(gif|jpeg|jpg|png|bmp)/i)
+
+  fileSizeInvalid = fileSize => fileSize >= 5000000 // 5 MB
+
+  filesInvalid = (fileList) => {
+    const self = this;
+    return Array.from(fileList).some(function(file) {
+      const invalidType = self.fileTypeInvalid(file.type);
+      const invalidSize = self.fileSizeInvalid(file.size);
+      let errorMessage = '';
+      if (invalidType && invalidSize) {
+        errorMessage = `${file.name} is an invalid file type of ${file.type} and is larger than 5 MB.`;
+        addErrorTimer(errorMessage);
+      } else if (invalidType) {
+        errorMessage = `${file.name} has an invalid file type of ${file.type}.`;
+        addErrorTimer(errorMessage);
+      } else if (invalidSize) {
+        errorMessage = `${file.name} is larger than 5MB.`;
+        addErrorTimer(errorMessage);
+      }
+      return invalidType || invalidSize;
+    });
+  }
+
   fileSubmitHandler = (event) => {
     event.preventDefault();
     const fileList = document.querySelector('#files').files;
@@ -91,6 +116,8 @@ class Upload extends Component {
       this.promiseFileLoader(fileList);
     } else if (fileList.length < 1) {
       addErrorTimer('You must select a file.');
+    } else if (this.filesInvalid(fileList)) {
+      // If the files in the list are valid
     } else if (!this.state.passwordValidated) {
       addErrorTimer(this.state.passwordError);
     }
@@ -109,13 +136,20 @@ class Upload extends Component {
     if (this.state.uploaded) return <Redirect to={this.state.url} />;
     return (
       <form className="upload-grid" onSubmit={this.fileSubmitHandler}>
-        <input type="file" id="files" multiple />
+        <div className="file-select-container">
+          <input type="file" id="files" multiple />
+          <FileLimitInstructions />
+        </div>
         <Password
           handlePassword={this.handlePassword}
           addErrorTimer={addErrorTimer}
         />
         <button type="submit" className="button" disabled={this.state.loading}>Upload</button>
-        {this.state.loading && <Loading message={this.state.statusMessage} />}
+        {this.state.loading && (
+        <div className="upload-loading">
+          <Loading message={this.state.statusMessage} />
+        </div>
+        )}
       </form>
     );
   }

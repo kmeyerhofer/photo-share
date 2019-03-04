@@ -22,17 +22,58 @@
 .home .upload-grid {
   display: grid;
   grid-row-gap: 35px;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
   grid-template-columns: 50% 50%;
   grid-template-areas:
     "files password"
-    "upload upload";
+    "upload upload"
+    "loading loading";
+}
+
+.upload-loading {
+  grid-area: loading;
+  place-self: center;
+}
+
+.upload-loading .loading {
+  border: 3px solid var(--title-primary);
+  background: linear-gradient(to bottom, var(--file-background-primary) 50%, var(--file-background-secondary));
+  padding: 12px 12px 4px 12px;
+}
+
+.file-select-container {
+  grid-area: files;
+  display: flex;
+  border: none;
+  margin: 0 50px;
+  padding: 10px;
+  height: 60px;
+  width: auto;
+  border-radius: 0;
+  background-color: var(--input-background);
+  color: var(--instruction-text-primary);
+  border: 3px solid var(--button-border);
+}
+
+.upload-instructions {
+  font-size: .9rem;
+  align-self: center;
+}
+
+.upload-instructions li:last-child {
+  margin-top: 15px;
+}
+
+.asterisk {
+  color: var(--error-border);
 }
 
 #files {
-  grid-area: files;
   font-size: 1.25rem;
   cursor: pointer;
+  border: none;
+  height: 60px;
+  flex-grow: 2;
 }
 
 #passEncrypt {
@@ -40,8 +81,7 @@
   font-size: 1.5rem;
 }
 
-#passEncrypt,
-#files {
+#passEncrypt {
   border: none;
   margin: 0 50px;
   padding: 10px;

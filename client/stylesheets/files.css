@@ -11,16 +11,40 @@
   grid-template-rows: auto;
   grid-template-columns: auto minmax(225px, auto);
   grid-template-areas:
-    "file comments-container";
+    "file-container comments-container";
   align-items: center;
+}
+
+.file-container {
+  grid-area: file-container;
+  place-self: center;
+  display: grid;
+  grid: auto 40px / auto;
+  grid-template-areas:
+    "file"
+    "download";
 }
 
 .file {
   grid-area: file;
-  place-self: center;
   min-width: 250px;
   max-width: 100%;
   height: auto;
+}
+
+.download {
+  grid-area: download;
+  text-align: center;
+  place-self: center;
+}
+
+.download .button {
+  box-sizing: border-box;
+  font-size: .8rem;
+  padding: 9px;
+  text-decoration: none;
+  border: 2px solid var(--button-border);
+
 }
 
 .comments-container {
