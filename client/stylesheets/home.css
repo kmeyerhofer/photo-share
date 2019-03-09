@@ -2,7 +2,7 @@
   font-family: 'Furore', sans-serif;
 }
 
-.home .instructions-flexbox {
+.instructions-flexbox {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -14,12 +14,12 @@
   background-color: var(--instruction-background);
 }
 
-.home .instruction {
+.instruction {
   flex-shrink: 1;
   flex-grow: 1;
 }
 
-.home .upload-grid {
+.upload-grid {
   display: grid;
   grid-row-gap: 35px;
   grid-template-rows: auto auto auto;

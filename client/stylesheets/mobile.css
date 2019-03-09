@@ -1,0 +1,76 @@
+@media screen and (max-width: 768px) {
+  /* Tablets */
+  .instructions-flexbox {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .instruction {
+    margin: 7px 0;
+  }
+
+  .upload-grid {
+    grid-template-rows: auto auto auto auto;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "files"
+      "password"
+      "upload"
+      "loading";
+  }
+
+  .file-select-container {
+    text-align: center;
+  }
+
+  #files {
+    margin: 0 auto;
+  }
+
+  #passEncrypt {
+    height: 60px;
+    margin-left: 0;
+  }
+
+  .home button {
+    min-width: 180px;
+  }
+
+  .file-list-container {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+
+  .file-list-pass {
+    width: 100%;
+  }
+
+  .file-list-button {
+    min-width: 180px;
+  }
+}
+
+@media screen and (max-width: 668px) {
+  /* Header 1 reaches ~5rem */
+  .home h1,
+  .file-list-container h1 {
+    font-size: 12vw;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  /* Phones */
+  .file-select-container {
+    text-align: left;
+  }
+
+  .upload-instructions li {
+    display: block;
+  }
+
+  .upload-instructions li:last-child {
+    margin-left: 0;
+  }
+}
