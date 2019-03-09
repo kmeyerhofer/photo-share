@@ -137,8 +137,8 @@ class Upload extends Component {
     return (
       <form className="upload-grid" onSubmit={this.fileSubmitHandler}>
         <div className="file-select-container">
-          <input type="file" id="files" multiple />
           <FileLimitInstructions />
+          <input type="file" id="files" multiple />
         </div>
         <Password
           handlePassword={this.handlePassword}

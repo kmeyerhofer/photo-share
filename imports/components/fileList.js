@@ -72,7 +72,7 @@ class FileList extends Component {
     } if (!this.state.passwordEntered) {
       return (
         <div className="file-list-grid">
-          <h2 className="file-list-instruction">Enter the password below to decrypt the files sent to you</h2>
+          <h2 className="file-list-instruction">Enter the password below to decrypt the files sent to you.</h2>
           <Password
             handlePassword={this.handlePassword}
             addErrorTimer={addErrorTimer}
