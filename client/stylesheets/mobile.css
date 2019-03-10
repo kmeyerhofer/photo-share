@@ -1,5 +1,6 @@
 @media screen and (max-width: 768px) {
   /* Tablets */
+  /* Home Page */
   .instructions-flexbox {
     flex-direction: column;
     justify-content: center;
@@ -37,11 +38,11 @@
     min-width: 180px;
   }
 
+  /* Decryption page */
   .file-list-container {
     margin: 0 auto;
     width: 100%;
   }
-
 
   .file-list-pass {
     width: 100%;
@@ -50,10 +51,24 @@
   .file-list-button {
     min-width: 180px;
   }
+
+  .file-list-loading {
+    place-self: center;
+  }
+
+  /* File List */
+  .file-grid {
+    grid-row-gap: 15px;
+    grid-template-rows: auto minmax(400px, auto);
+    grid-template-columns: auto;
+    grid-template-areas:
+      "file-container"
+      "comments-container";
+  }
 }
 
 @media screen and (max-width: 668px) {
-  /* Header 1 reaches ~5rem */
+  /* all h1's reaching ~5rem */
   .home h1,
   .file-list-container h1 {
     font-size: 12vw;
@@ -62,6 +77,10 @@
 
 @media screen and (max-width: 380px) {
   /* Phones */
+  /* Home Page */
+  body {
+    padding: 5px;
+  }
   .file-select-container {
     text-align: left;
   }

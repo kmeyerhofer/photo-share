@@ -27,7 +27,6 @@
 
 .file {
   grid-area: file;
-  min-width: 250px;
   max-width: 100%;
   height: auto;
 }
@@ -54,11 +53,22 @@
   position: relative;
   background-color: var(--file-background-secondary);
   display: grid;
-  grid-template-rows: auto 150px;
+  grid-template-rows: 40px auto 150px;
   grid-template-columns: auto;
   grid-template-areas:
+    "comment-header"
     "comment-flexbox"
     "comment-form";
+}
+
+.comment-header {
+  padding: 8px;
+  justify-self: stretch;
+  text-align: center;
+  color: var(--instruction-text-primary);
+  border: 2px solid var(--button-border);
+  border-bottom: none;
+  background-color: var(--instruction-background);
 }
 
 .comment-flexbox {
@@ -74,7 +84,10 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
+  border: 2px solid var(--button-border);
   justify-items: flex-end;
+  padding-top: 4px;
+  border-top: none;
 }
 
 .comment-container {
