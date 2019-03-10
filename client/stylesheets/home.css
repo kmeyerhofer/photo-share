@@ -55,7 +55,7 @@
 .upload-instructions {
   font-size: .9rem;
   align-self: center;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .upload-instructions li:last-child {
