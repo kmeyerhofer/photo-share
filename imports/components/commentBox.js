@@ -33,6 +33,7 @@ class CommentBox extends Component {
     }
     return (
       <div className="comments-container">
+        <div className="comment-header">Comments</div>
         <CommentList comments={this.props.comments} />
         <CommentForm saveComment={this.saveComment} />
       </div>

@@ -1,6 +1,3 @@
-.file-list-container {
-}
-
 .file-list-container h1 {
   font-family: 'FiraCode', sans-serif;
 }
@@ -27,7 +24,7 @@
 .file-list-grid {
   display: grid;
   grid-template-rows: auto auto;
-  grid-template-columns: auto;
+  grid-template-columns: 100%;
   grid-template-areas:
     "instruction"
     "form";
@@ -42,14 +39,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .file-list-pass {
+  box-sizing: border-box;
   border: none;
   font-size: 1.5rem;
   margin: 0 50px 35px 50px;
   padding: 10px;
-  height: 60px;
+  height: 86px;
   width: 50%;
   border-radius: 0;
   background-color: var(--input-background);

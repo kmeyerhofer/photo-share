@@ -10,7 +10,7 @@ if (Meteor.isClient) {
   describe('<Password /> (Decrypt)', () => {
     it('should have password input placeholder', () => {
       const wrapper = shallow(<Password />);
-      expect(wrapper.find('input[type="password"]').prop('placeholder')).to.equal('Enter decryption password');
+      expect(wrapper.find('input[type="password"]').prop('placeholder')).to.equal('Decryption password');
     });
 
     it('should have a submit button', () => {

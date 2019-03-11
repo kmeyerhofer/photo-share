@@ -2,7 +2,7 @@
   font-family: 'Furore', sans-serif;
 }
 
-.home .instructions-flexbox {
+.instructions-flexbox {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -14,25 +14,38 @@
   background-color: var(--instruction-background);
 }
 
-.home .instruction {
+.instruction {
   flex-shrink: 1;
   flex-grow: 1;
 }
 
-.home .upload-grid {
+.upload-grid {
   display: grid;
   grid-row-gap: 35px;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   grid-template-columns: 50% 50%;
   grid-template-areas:
     "files password"
-    "upload upload"
-    "loading loading";
+    "upload upload";
 }
 
 .upload-loading {
-  grid-area: loading;
-  place-self: center;
+  position: fixed;
+  max-width: 391px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+.upload-loading::after {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  content: "";
+  background: rgba(0, 0, 0, .5);
 }
 
 .upload-loading .loading {
@@ -43,12 +56,9 @@
 
 .file-select-container {
   grid-area: files;
-  display: flex;
   border: none;
-  margin: 0 50px;
   padding: 10px;
-  height: 60px;
-  width: auto;
+  min-width: auto;
   border-radius: 0;
   background-color: var(--input-background);
   color: var(--instruction-text-primary);
@@ -58,10 +68,15 @@
 .upload-instructions {
   font-size: .9rem;
   align-self: center;
+  margin-top: 10px;
 }
 
 .upload-instructions li:last-child {
-  margin-top: 15px;
+  margin-left: 25px;
+}
+
+.upload-instructions li {
+  display: inline;
 }
 
 .asterisk {
@@ -72,8 +87,8 @@
   font-size: 1.25rem;
   cursor: pointer;
   border: none;
+  width: 100%;
   height: 60px;
-  flex-grow: 2;
 }
 
 #passEncrypt {
@@ -83,10 +98,8 @@
 
 #passEncrypt {
   border: none;
-  margin: 0 50px;
+  margin-left: 25px;
   padding: 10px;
-  height: 60px;
-  width: auto;
   border-radius: 0;
   background-color: var(--input-background);
   color: var(--instruction-text-primary);

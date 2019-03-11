@@ -5,7 +5,7 @@ export default function FileLimitInstructions() {
   return (
     <ul className="upload-instructions">
       <li><span className="asterisk">*</span> Image files only</li>
-      <li><span className="asterisk">*</span> File size limit of 5MB</li>
+      <li><span className="asterisk">*</span> 5MB maximum</li>
     </ul>
   );
 }
