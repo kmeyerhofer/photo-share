@@ -43,9 +43,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
+    "bcryptjs": "^2.4.3",
     "blob-util": "^2.0.2",
     "fs-extra": "^7.0.1",
     "history": "^4.7.2",
+    "jsonwebtoken": "^8.5.1",
     "node-forge": "^0.7.6",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -64,6 +66,8 @@
     "testModule": "tests/main.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
     "@meteorjs/eslint-config-meteor": "^1.0.5",
     "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",

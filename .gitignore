@@ -5,3 +5,4 @@ uploadEncryptNotes
 .DS_Store
 imports/.DS_Store
 circleciAPIKey
+imports/server/private/*

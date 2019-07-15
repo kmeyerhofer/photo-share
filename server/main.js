@@ -3,6 +3,10 @@ import { check } from 'meteor/check';
 import fse from 'fs-extra';
 import MongoFiles from '../imports/api/mongoFiles.js';
 import MongoComments from '../imports/api/mongoComments.js';
+import AdminDB from '../imports/api/adminDB.js';
+import passwordHashGen from '../imports/server/passwordHash.js';
+import retrieveUser from '../imports/server/retrieveUserAndValidate.js';
+import keys from '../imports/server/settings/keys.js';
 
 Meteor.startup(() => {
 });
@@ -47,6 +51,17 @@ Meteor.methods({
     }
   },
 
+  loginAdmin(username, password) {
+    check(username, String);
+    check(password, String);
+    return retrieveUser(username, password, keys.privatekey, (err, token) => {
+      if(err){
+        return err;
+      } else {
+        return token;
+      }
+    });
+  }
 });
 
 Meteor.publish('files', function(folderURL) {
