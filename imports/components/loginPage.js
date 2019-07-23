@@ -23,9 +23,12 @@ class LoginPage extends Component {
         console.log(err);
         return;
       }
-      sessionStorage.setItem('jwt', token);
-      this.props.authUser();
-      this.setState({redirect: true});
+      if(token){
+        sessionStorage.setItem('jwt', token);
+        this.props.authUser();
+        this.setState({redirect: true});
+      }
+      return;
     });
   }
 

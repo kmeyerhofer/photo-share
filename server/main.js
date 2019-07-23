@@ -7,6 +7,8 @@ import AdminDB from '../imports/api/adminDB.js';
 import passwordHashGen from '../imports/server/passwordHash.js';
 import retrieveUser from '../imports/server/retrieveUserAndValidate.js';
 import keys from '../imports/server/settings/keys.js';
+import jwt from 'jsonwebtoken';
+import deleteFileAndFolder from '../imports/server/deleteFileAndFolder.js';
 
 Meteor.startup(() => {
 });
@@ -15,8 +17,8 @@ Meteor.methods({
   fileUpload(fileData, encryptedFile) {
     check(fileData, { url: String, fileLocation: String, fileName: String });
     check(encryptedFile, String);
-    const dirLocation = `${process.env.PHOTO_SHARE_DIR}`;
-    const fullFileLocation = `${dirLocation}/${fileData.fileLocation}`; // use this endpoint for file loading
+    const dirLocation = `${process.env.PWD}`;
+    const fullFileLocation = `${dirLocation}/tmp/${fileData.fileLocation}`; // use this endpoint for file loading
     fse.outputFile(fullFileLocation, encryptedFile, { encoding: 'base64' }, function (err) {
       if (err) throw err;
     });
@@ -56,12 +58,35 @@ Meteor.methods({
     check(password, String);
     return retrieveUser(username, password, keys.privatekey, (err, token) => {
       if(err){
-        return err;
+        throw new Meteor.Error('Invalid password', 'passwords do not match');
       } else {
         return token;
       }
     });
+  },
+
+  retrieveFiles() {
+    const files = MongoFiles.find({}, {fields: {fileName:1, fileLocation:1, url:1}}).fetch();
+    const fileArray = [].concat.apply([], files)
+    return fileArray;
+  },
+
+  async deleteFile(token, fileObj){
+    // 1.) verify token, return if not valid
+    // 2.) delete file from tmp folder using variables url as tmp folder directory and fileLocation as the file name
+    // 3.) remove url folder from tmp if folder is empty
+    // 4.) delete reference from mongoFiles collection
+    // 5.) return a truthy value to the client.
+    const verify = jwt.verify(token, keys.publickey);
+    if (verify) {
+      const deleted = await deleteFileAndFolder(fse, fileObj[1], fileObj[0], fileObj[2]);
+      return deleted;
+    } else {
+      return false;
+    }
+
   }
+
 });
 
 Meteor.publish('files', function(folderURL) {

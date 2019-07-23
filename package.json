@@ -42,19 +42,12 @@
     ]
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@babel/runtime": "^7.1.5",
+    "@babel/runtime": "^7.5.4",
     "bcryptjs": "^2.4.3",
     "blob-util": "^2.0.2",
     "fs-extra": "^7.0.1",
-    "history": "^4.7.2",
-    "jsonwebtoken": "^8.5.1",
-=======
-    "@babel/runtime": "^7.5.4",
-    "blob-util": "^2.0.2",
-    "fs-extra": "^7.0.1",
     "history": "^4.9.0",
->>>>>>> master
+    "jsonwebtoken": "^8.5.1",
     "node-forge": "^0.7.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
