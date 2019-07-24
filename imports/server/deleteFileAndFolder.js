@@ -28,16 +28,16 @@ const deleteFileAndFolder = async (fse, url, fileLocation, fileName) => {
       return true;
     } catch (err) {
       console.log(err);
+      return false
     }
   } else {
     try {
       const removeFile = await fse.remove(path);
-      console.log(fileName);
       const removeDocument = await MongoFiles.remove({fileName:`${fileName}`});
-      console.log(removeDocument);
       return true;
     } catch (err) {
       console.log(err);
+      return false;
     }
   }
 }

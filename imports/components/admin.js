@@ -21,9 +21,13 @@ class Admin extends Component {
 
   deleteFile = (fileLocation, url, fileName) => {
     const fileData = [fileLocation, url, fileName];
+    const myFiles = this.state.files;
+    const newFiles = myFiles.filter(file => file.fileName != fileName);
+    this.setState({files: newFiles});
     Meteor.call('deleteFile', this.state.token, fileData, (err) => {
       if(err){
         console.log(err);
+      } else {
       }
     });
   }
@@ -33,7 +37,8 @@ class Admin extends Component {
       if(err){
         console.log(err); //add redux error
       }
-      this.setState({files: [...this.state.files, ...files] });
+      this.setState({files: [...this.state.files, ...files] }, () => {
+      });
     });
   }
 
