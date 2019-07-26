@@ -12,8 +12,8 @@ class fileListAdmin extends Component {
   render() {
     if(this.props.files && this.props.files.length > 0){
       return(
-        <div>
-          <ul>
+        <div className="container-filelist">
+          <ul className="filelist">
             {this.fileMap()}
           </ul>
         </div>

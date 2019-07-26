@@ -1,0 +1,22 @@
+.container-filelist{
+  display: flex;
+  border: solid;
+  flex-direction: row;
+}
+
+.fileAdmin{
+  border: solid;
+  display: grid;
+  grid-template-columns: 70% auto;
+  grid-template-areas: "file button";
+}
+
+.file-admin-button{
+  grid-area: button;
+  width: 50px;
+}
+
+.text-holder{
+  grid-area: file;
+  white-space: pre-line;
+}

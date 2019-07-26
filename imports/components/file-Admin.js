@@ -7,8 +7,8 @@ const FileAdmin = (props) => {
   //pass in prop from admin to button component
   return(
     <li>
-      <div>
-        {props.fileName}
+      <div className="fileAdmin">
+        <div className="text-holder"> <p>{props.fileName}</p> </div>
         <DeleteFileButton deleteFile={props.deleteFile} url={props.url} fileLocation={props.fileLocation} fileName={props.fileName}/>
       </div>
     </li>

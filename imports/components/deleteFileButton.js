@@ -8,7 +8,9 @@ export default class DeleteFileButton extends Component {
 
   render(){
     return(
+      <div className="file-admin-button">
       <button type="button" onClick={this.handleClick}>delete</button>
+      </div>
     );
   }
 }
