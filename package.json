@@ -45,7 +45,7 @@
     "@babel/runtime": "^7.5.4",
     "blob-util": "^2.0.2",
     "fs-extra": "^7.0.1",
-    "history": "^4.9.0",
+    "history": "^4.10.1",
     "node-forge": "^0.7.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -53,7 +53,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.4",
-    "shortid": "^2.2.14",
+    "shortid": "^2.2.15",
     "simpl-schema": "^1.5.5"
   },
   "meteor": {
@@ -79,6 +79,6 @@
     "faker": "^4.1.0",
     "meteor-node-stubs": "^0.4.1",
     "nightmare": "^3.0.2",
-    "sinon": "^7.3.2"
+    "sinon": "^7.4.2"
   }
 }
